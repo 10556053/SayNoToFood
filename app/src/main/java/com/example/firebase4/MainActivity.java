@@ -19,6 +19,7 @@ import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
+import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -39,6 +40,7 @@ import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -46,19 +48,21 @@ public class MainActivity extends AppCompatActivity {
 
 
     private EditText et_email,et_password;
-    private Button bt_google ,bt_login;
+    private Button bt_google ,bt_login,bt_facebook;
     private TextView bt_create_account;
     private int RC_SIGN_IN = 1;
     String TAG="TAG";
     private String Userid;
-    private LoginButton loginButton;
+
 
 
     private FirebaseFirestore fStore;
     private FirebaseAuth fAuth;
     private GoogleSignInClient mGoogleSignInClientl;
 
+    private LoginManager loginManager;
     private CallbackManager mCallbackManager;
+    private AccessToken accessToken;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,15 +71,27 @@ public class MainActivity extends AppCompatActivity {
         et_password=(EditText)findViewById(R.id.et_password);
         bt_login=(Button)findViewById(R.id.bt_login);
         bt_google=(Button)findViewById(R.id.bt_google);
+        bt_facebook=(Button)findViewById(R.id.bt_facebook) ;
         bt_create_account=(TextView)findViewById(R.id.bt_create_account);
 
-
+        accessToken = AccessToken.getCurrentAccessToken();
         fAuth = FirebaseAuth.getInstance();
         FacebookSdk.sdkInitialize(getApplicationContext());
         FirebaseUser currentUser = fAuth.getCurrentUser();
         mCallbackManager = CallbackManager.Factory.create();
-        loginButton=(LoginButton)findViewById(R.id.login_button);
-        loginButton.setReadPermissions("email", "public_profile");
+        loginManager = LoginManager.getInstance();
+        //loginButton=(LoginButton)findViewById(R.id.login_button);
+
+
+
+        if (accessToken!= null){
+            //使用者為登出
+            loginManager.logOut();
+        }else{
+            //使用者以登出
+            Toast.makeText(MainActivity.this, "以登出", Toast.LENGTH_SHORT).show();
+        }
+
     //=========================Email and Password===================================//
         bt_login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -110,25 +126,35 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         //======================Facebook============================//
-        loginButton.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
-            @Override
-            public void onSuccess(LoginResult loginResult) {
-                Log.d(TAG, "facebook:onSuccess:" + loginResult);
-                handleFacebookAccessToken(loginResult.getAccessToken());
-            }
 
+        bt_facebook.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCancel() {
-                Log.d(TAG, "facebook:onCancel");
-                // ...
-            }
+            public void onClick(View v) {
+                loginManager.logInWithReadPermissions(MainActivity.this, Arrays.asList("email", "public_profile"));
+                loginManager.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
+                    @Override
+                    public void onSuccess(LoginResult loginResult) {
+                        Log.d(TAG, "facebook:onSuccess:" + loginResult);
 
-            @Override
-            public void onError(FacebookException error) {
-                Log.d(TAG, "facebook:onError", error);
-                // ...
+                        handleFacebookAccessToken(loginResult.getAccessToken());
+
+                    }
+
+                    @Override
+                    public void onCancel() {
+                        Log.d(TAG, "facebook:onCancel");
+                        // ...
+                    }
+
+                    @Override
+                    public void onError(FacebookException error) {
+                        Log.d(TAG, "facebook:onError", error);
+                        // ...
+                    }
+                });
             }
         });
+
 
         //======================Google==============================//
         //=========================Google setup===========================//

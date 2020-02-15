@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.facebook.login.LoginManager;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -26,7 +27,7 @@ public class userPage extends AppCompatActivity {
     private Button bt_logout;
     private FirebaseAuth fAuth;
     private FirebaseFirestore fStore;
-
+     private LoginManager loginManager;
     private GoogleSignInClient mGoogleSignInClientl;
     private String UserId;
 
@@ -41,6 +42,7 @@ public class userPage extends AppCompatActivity {
         fAuth=FirebaseAuth.getInstance();
         fStore=FirebaseFirestore.getInstance();
         UserId=fAuth.getCurrentUser().getUid();
+        loginManager = LoginManager.getInstance();
         DocumentReference documentReference=fStore.collection("users").document(UserId);
         documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
             @Override
@@ -73,6 +75,8 @@ public class userPage extends AppCompatActivity {
             public void onClick(View v) {
                 fAuth.signOut();
                 mGoogleSignInClientl.signOut();
+                loginManager.logOut();
+
                 startActivity(new Intent(getApplicationContext(),MainActivity.class));
 
             }
