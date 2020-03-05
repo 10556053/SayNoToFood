@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -114,10 +115,11 @@ public class MainActivity extends AppCompatActivity {
                         if(task.isSuccessful()){
                             if(fAuth.getCurrentUser().isEmailVerified()){
                                 Toast.makeText(MainActivity.this, "login successful", Toast.LENGTH_SHORT).show();
+                                startActivity(new Intent(getApplicationContext(),userPage.class));
                             }else {
                                 Toast.makeText(MainActivity.this, "go to mailbox to checkout varification email", Toast.LENGTH_SHORT).show();
                             }
-                            startActivity(new Intent(getApplicationContext(),userPage.class));
+
                         }else{
                             Toast.makeText(MainActivity.this, "error"+task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                         }
@@ -239,6 +241,7 @@ public class MainActivity extends AppCompatActivity {
         GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(getApplicationContext());
         if (acct != null) {
             String personName = acct.getDisplayName();
+            String photouri = user.getPhotoUrl().toString();
             String personGivenName = acct.getGivenName();
             String personFamilyName = acct.getFamilyName();
             String personEmail = acct.getEmail();
@@ -249,6 +252,7 @@ public class MainActivity extends AppCompatActivity {
             data.put("name", personName);
             data.put("email", personEmail);
             data.put("password", personId);
+            data.put("images", photouri);
             DocumentReference documentReference=fStore.collection("users").document(Userid);//設定集合的名子為users,底下的文件以使用者id命名
             documentReference.set(data).addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
@@ -302,11 +306,12 @@ public class MainActivity extends AppCompatActivity {
         if(user!= null ){
             String personName = user.getDisplayName();
             String personEmail = user.getEmail();
+            String photouri = user.getPhotoUrl().toString();
             Userid= user.getUid();
             Map<String, Object> data = new HashMap<>();
             data.put("name", personName);
             data.put("email", personEmail);
-
+            data.put("images", photouri);
             DocumentReference documentReference=fStore.collection("users").document(Userid);//設定集合的名子為users,底下的文件以使用者id命名
             documentReference.set(data).addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override

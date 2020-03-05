@@ -115,6 +115,7 @@ public class register extends AppCompatActivity {
                                                 data.put("name", name);
                                                 data.put("email", email);
                                                 data.put("password", password);
+                                                data.put("images", "");
                                                 //======================================================================//
                                                 DocumentReference documentReference=fStore.collection("users").document(UserId);//設定集合的名子為users,底下的文件以使用者id命名
                                                 documentReference.set(data).addOnSuccessListener(new OnSuccessListener<Void>() {
