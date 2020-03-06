@@ -23,6 +23,8 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -71,6 +73,7 @@ public class userPage extends AppCompatActivity {
         tv_password=(TextView)findViewById(R.id.tv_password);
         tv_url=(TextView)findViewById(R.id.tv_url);
         mImageView=(ImageView)findViewById(R.id.mImageView);
+
         fAuth=FirebaseAuth.getInstance();
         fStore=FirebaseFirestore.getInstance();
         UserId=fAuth.getCurrentUser().getUid();
@@ -155,24 +158,37 @@ public class userPage extends AppCompatActivity {
             if(resultCode==RESULT_OK){
                 //用resultUri存放裁切完的圖片的uri
                 final Uri resultUri= result.getUri();
+                mImageView.setImageURI(resultUri);
                 //檔案位址
-                final StorageReference userIDRef= fStorage.getReference().child("User_Profile_Images").child(UserId+".jpg");
-
+                //final StorageReference userIDRef= fStorage.getReference().child("User_Profile_Images").child(UserId+".jpg");
                 //將檔案放入位址
-                userIDRef.putFile(resultUri);
-                DownloadViaUrl();
+                //userIDRef.putFile(resultUri);
+                HandleUploadImage(resultUri);
             }
         }
 
     }
 
 
-    private void DownloadViaUrl() {
+    private void HandleUploadImage(Uri resultUri) {
 
-        StorageReference userIDRef= fStorage.getReference().child("User_Profile_Images").child(UserId+".jpg");
+        final StorageReference userIDRef= fStorage.getReference().child("User_Profile_Images").child(UserId+".jpg");
         UserId=fAuth.getCurrentUser().getUid();
 
-        userIDRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+
+        userIDRef.putFile(resultUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                DownloadViaUrl(userIDRef);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+
+            }
+        });
+
+        /*userIDRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
                 loadUrl = uri.toString();
@@ -199,7 +215,63 @@ public class userPage extends AppCompatActivity {
             public void onFailure(@NonNull Exception e) {
 
             }
+        });*/
+    }
+    private void DownloadViaUrl(StorageReference userIDRef){
+        userIDRef.getDownloadUrl()
+                .addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        setUserProfileUrl(uri);
+                    }
+                });
+    }
+
+    private void setUserProfileUrl(Uri uri) {
+        FirebaseUser user=fAuth.getCurrentUser();
+        UserProfileChangeRequest request = new UserProfileChangeRequest.Builder()
+                .setPhotoUri(uri)
+                .build();
+        user.updateProfile(request)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(userPage.this, "update successful",
+                                Toast.LENGTH_SHORT).show();
+                        UpdateUserPhotoUrl();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(userPage.this, "update failed.",
+                        Toast.LENGTH_SHORT).show();
+            }
         });
+    }
+
+    private void UpdateUserPhotoUrl() {
+        UserId=fAuth.getCurrentUser().getUid();
+        final FirebaseUser user =fAuth.getCurrentUser();
+        Map<String,Object> update= new HashMap<>();
+        DocumentReference documentReference=fStore.collection("users").document(UserId);
+
+        update.put("images",user.getPhotoUrl().toString());
+        documentReference.set(update,SetOptions.merge()).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Toast.makeText(userPage.this, "database update ok",
+                        Toast.LENGTH_SHORT).show();
+                Toast.makeText(userPage.this, user.getPhotoUrl().toString(),
+                        Toast.LENGTH_SHORT).show();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(userPage.this, "Oops something went wrong",
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
+
 
     }
 
