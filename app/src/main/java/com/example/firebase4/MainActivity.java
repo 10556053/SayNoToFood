@@ -328,6 +328,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
     private void initStart(){
+
         startActivity(new Intent(getApplicationContext(),userPage.class));
     }
 }
