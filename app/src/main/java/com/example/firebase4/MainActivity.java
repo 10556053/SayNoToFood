@@ -115,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
                         if(task.isSuccessful()){
                             if(fAuth.getCurrentUser().isEmailVerified()){
                                 Toast.makeText(MainActivity.this, "login successful", Toast.LENGTH_SHORT).show();
-                                startActivity(new Intent(getApplicationContext(),userPage.class));
+                                initStart();
                             }else {
                                 Toast.makeText(MainActivity.this, "go to mailbox to checkout varification email", Toast.LENGTH_SHORT).show();
                             }
@@ -265,7 +265,7 @@ public class MainActivity extends AppCompatActivity {
                     Log.d(TAG,"failed! "+e.toString());
                 }
             });
-            startActivity(new Intent(getApplicationContext(),userPage.class));
+            initStart();
         }
     }
     //==============FaceBook SignIn Functions========================//
@@ -324,7 +324,10 @@ public class MainActivity extends AppCompatActivity {
                     Log.d(TAG,"failed! "+e.toString());
                 }
             });
-            startActivity(new Intent(getApplicationContext(),userPage.class));
+            initStart();
         }
+    }
+    private void initStart(){
+        startActivity(new Intent(getApplicationContext(),userPage.class));
     }
 }

@@ -188,34 +188,6 @@ public class userPage extends AppCompatActivity {
             }
         });
 
-        /*userIDRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                loadUrl = uri.toString();
-                Map<String,Object> update= new HashMap<>();
-                update.put("images",loadUrl);
-                DocumentReference documentReference=fStore.collection("users").document(UserId);
-                documentReference.set(update,SetOptions.merge());
-                documentReference.addSnapshotListener(new EventListener<DocumentSnapshot>() {
-                    @Override
-                    public void onEvent(@androidx.annotation.Nullable DocumentSnapshot documentSnapshot, @androidx.annotation.Nullable FirebaseFirestoreException e) {
-                        loadUrl =documentSnapshot.getString("images");
-                        tv_url.setText(loadUrl);
-
-                    }
-                });
-                LoadImage();
-            }
-
-            private void LoadImage() {
-                Picasso.get().load(loadUrl).fit().into(mImageView);
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-
-            }
-        });*/
     }
     private void DownloadViaUrl(StorageReference userIDRef){
         userIDRef.getDownloadUrl()
