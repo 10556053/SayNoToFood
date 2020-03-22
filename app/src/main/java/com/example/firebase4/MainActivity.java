@@ -1,9 +1,11 @@
 package com.example.firebase4;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -38,8 +40,14 @@ import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -64,6 +72,9 @@ public class MainActivity extends AppCompatActivity {
     private LoginManager loginManager;
     private CallbackManager mCallbackManager;
     private AccessToken accessToken;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,8 +92,6 @@ public class MainActivity extends AppCompatActivity {
         FirebaseUser currentUser = fAuth.getCurrentUser();
         mCallbackManager = CallbackManager.Factory.create();
         loginManager = LoginManager.getInstance();
-        //loginButton=(LoginButton)findViewById(R.id.login_button);
-
 
 
         if (accessToken!= null){
@@ -251,8 +260,8 @@ public class MainActivity extends AppCompatActivity {
             Map<String, Object> data = new HashMap<>();
             data.put("name", personName);
             data.put("email", personEmail);
-            data.put("password", personId);
             data.put("images", photouri);
+            data.put("isFirstTime","yes");
             DocumentReference documentReference=fStore.collection("users").document(Userid);//設定集合的名子為users,底下的文件以使用者id命名
             documentReference.set(data).addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
@@ -312,6 +321,8 @@ public class MainActivity extends AppCompatActivity {
             data.put("name", personName);
             data.put("email", personEmail);
             data.put("images", photouri);
+            data.put("isFirstTime","yes");
+
             DocumentReference documentReference=fStore.collection("users").document(Userid);//設定集合的名子為users,底下的文件以使用者id命名
             documentReference.set(data).addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
@@ -328,7 +339,24 @@ public class MainActivity extends AppCompatActivity {
         }
     }
     private void initStart(){
+        FirebaseUser user = fAuth.getCurrentUser();
+        Userid = user.getUid();
 
-        startActivity(new Intent(getApplicationContext(),userPage.class));
+        DocumentReference documentReference=fStore.collection("users").document(Userid);
+        documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
+                String isFirstTime = documentSnapshot.getString("isFirstTime");
+                if (isFirstTime.equals("yes")){
+                    startActivity(new Intent(getApplicationContext(),FirstTimeActivity.class));
+                }else{
+                    startActivity(new Intent(getApplicationContext(),userPage.class));
+                }
+
+            }
+        });
+
+
+
     }
 }
