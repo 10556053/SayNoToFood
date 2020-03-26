@@ -24,7 +24,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.HashMap;
 import java.util.Map;
 
-public class FirstTimeWeightInput extends AppCompatActivity implements View.OnClickListener, WeightInputDialog.WeightInputDialogListener , HeightInputDialog.HeightInputDialogListener, TargetWeightInputDialog.TargetWeightInputDialogListener {
+public class FirstTimeWeightInput extends AppCompatActivity implements View.OnClickListener, SexInputDialog.SexInputDialogListener, WeightInputDialog.WeightInputDialogListener , HeightInputDialog.HeightInputDialogListener, TargetWeightInputDialog.TargetWeightInputDialogListener {
     private CardView cd_gender,cd_height,cd_weight,cd_target_weight;
     private TextView tv_show_gender,tv_show_height,tv_show_weight,tv_show_target_weight;
     private NumberPicker np;
@@ -66,6 +66,7 @@ public class FirstTimeWeightInput extends AppCompatActivity implements View.OnCl
         switch (v.getId()){
             case R.id.cd_gender:i = new Intent(getApplicationContext(),FirstTimeActivity2.class);
                 //show();
+                showSex();
                 //startActivity(i);
                 break;
 
@@ -84,6 +85,11 @@ public class FirstTimeWeightInput extends AppCompatActivity implements View.OnCl
                 //startActivity(i);
                 break;
         }
+    }
+
+    private void showSex() {
+        SexInputDialog sexInputDialog = new SexInputDialog();
+        sexInputDialog.show(getSupportFragmentManager(),"sex_input_dialog");
     }
 
     private void showHeight() {
@@ -106,16 +112,21 @@ public class FirstTimeWeightInput extends AppCompatActivity implements View.OnCl
 
     @Override
     public void applyWeight(String weight) {
-        tv_show_weight.setText(weight);
+        tv_show_weight.setText(weight+"公斤");
     }
 
     @Override
     public void applyHeight(String height) {
-        tv_show_height.setText(height);
+        tv_show_height.setText(height+"公分");
     }
 
     @Override
     public void applyTargetWeight(String target_weight) {
-        tv_show_target_weight.setText(target_weight);
+        tv_show_target_weight.setText(target_weight+"公斤");
+    }
+
+    @Override
+    public void applySex(String sex) {
+        tv_show_gender.setText(sex);
     }
 }

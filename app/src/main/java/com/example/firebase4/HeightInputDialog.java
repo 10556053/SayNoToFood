@@ -46,8 +46,9 @@ public class HeightInputDialog extends AppCompatDialogFragment implements Number
         LayoutInflater inflater= getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.heightpicker,null);
         hp=view.findViewById(R.id.height_picker);
-        hp.setMaxValue(200);
+        hp.setMaxValue(250);
         hp.setMinValue(100);
+        hp.setValue(150);
         hp.setWrapSelectorWheel(false);
         hp.setOnValueChangedListener(this);
         tv_display_cur_height=view.findViewById(R.id.tv_display_cur_height);

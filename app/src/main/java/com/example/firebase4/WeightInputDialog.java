@@ -49,6 +49,7 @@ public class WeightInputDialog extends AppCompatDialogFragment implements Number
         np=view.findViewById(R.id.num_picker);
         np.setMaxValue(100);
         np.setMinValue(0);
+        np.setValue(80);
         np.setWrapSelectorWheel(false);
         np.setOnValueChangedListener(this);
         tv_display_cur_num=view.findViewById(R.id.tv_display_cur_num);

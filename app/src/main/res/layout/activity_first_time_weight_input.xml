@@ -26,7 +26,9 @@
             android:id="@+id/textView4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="TextView" />
+            android:layout_marginTop="10dp"
+            android:gravity="center_horizontal"
+            android:text="告訴我們您的身體狀況，好讓我們更大聲的嘲笑你" />
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cd_gender"
@@ -65,7 +67,7 @@
                     android:layout_marginRight="30dp"
                     android:layout_weight="1"
                     android:gravity="clip_horizontal|center_horizontal"
-                    android:text="TextView" />
+                    android:textSize="18sp" />
             </LinearLayout>
 
         </androidx.cardview.widget.CardView>
@@ -107,7 +109,7 @@
                     android:layout_marginRight="30dp"
                     android:layout_weight="1"
                     android:gravity="clip_horizontal|center_horizontal"
-                    android:text="TextView" />
+                    android:textSize="18sp" />
             </LinearLayout>
 
         </androidx.cardview.widget.CardView>
@@ -149,7 +151,7 @@
                     android:layout_marginRight="30dp"
                     android:layout_weight="1"
                     android:gravity="clip_horizontal|center_horizontal"
-                    android:text="TextView" />
+                    tools:textSize="18sp" />
             </LinearLayout>
 
         </androidx.cardview.widget.CardView>
@@ -191,7 +193,7 @@
                     android:layout_marginRight="30dp"
                     android:layout_weight="1"
                     android:gravity="clip_horizontal|center_horizontal"
-                    android:text="TextView" />
+                    android:textSize="18sp" />
             </LinearLayout>
 
         </androidx.cardview.widget.CardView>
