@@ -1,12 +1,11 @@
-package com.example.firebase4;
+package com.example.firebase4.FirstTimeInput;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
-import android.app.Dialog;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -15,23 +14,26 @@ import android.widget.NumberPicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
+import com.example.firebase4.DataBase.SQLiteDataBaseHelper;
+import com.example.firebase4.FastEventScheduler;
+import com.example.firebase4.InputDialog.HeightInputDialog;
+import com.example.firebase4.InputDialog.SexInputDialog;
+import com.example.firebase4.InputDialog.TargetWeightInputDialog;
+import com.example.firebase4.InputDialog.WeightInputDialog;
+import com.example.firebase4.R;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class FirstTimeWeightInput extends AppCompatActivity implements View.OnClickListener, SexInputDialog.SexInputDialogListener, WeightInputDialog.WeightInputDialogListener , HeightInputDialog.HeightInputDialogListener, TargetWeightInputDialog.TargetWeightInputDialogListener {
     private CardView cd_gender,cd_height,cd_weight,cd_target_weight;
     private TextView tv_show_gender,tv_show_height,tv_show_weight,tv_show_target_weight;
     private NumberPicker np;
-    private Button btn_submit,btn_return;
+    private Button bt_next;
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
     String UserId;
+    public SQLiteDatabase db;
+    public SQLiteDataBaseHelper sqLiteDataBaseHelper;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +49,8 @@ public class FirstTimeWeightInput extends AppCompatActivity implements View.OnCl
         tv_show_weight=(TextView)findViewById(R.id.tv_show_weight);
         tv_show_target_weight=(TextView)findViewById(R.id.tv_show_target_weight);
 
+        bt_next = (Button)findViewById(R.id.bt_next);
+
 
         fAuth=FirebaseAuth.getInstance();
         fStore=FirebaseFirestore.getInstance();
@@ -56,6 +60,23 @@ public class FirstTimeWeightInput extends AppCompatActivity implements View.OnCl
         cd_weight.setOnClickListener(this);
         cd_target_weight.setOnClickListener(this);
 
+        bt_next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sqLiteDataBaseHelper = new SQLiteDataBaseHelper(FirstTimeWeightInput.this);
+                db=sqLiteDataBaseHelper.getWritableDatabase();
+                db.execSQL("delete from table_novice" );
+                db.execSQL("UPDATE sqlite_sequence SET seq = 0 WHERE name = 'table_novice'");
+                db.execSQL("delete from table_advanced" );
+                db.execSQL("UPDATE sqlite_sequence SET seq = 0 WHERE name = 'table_advanced'");
+                db.execSQL("delete from table_hard" );
+                db.execSQL("UPDATE sqlite_sequence SET seq = 0 WHERE name = 'table_hard'");
+                Toast.makeText(FirstTimeWeightInput.this , "已刪除",  Toast.LENGTH_SHORT).show();
+                Intent i = new Intent(getApplicationContext(), FastEventScheduler.class);
+                startActivity(i);
+            }
+        });
+
 
     }
 
@@ -64,7 +85,7 @@ public class FirstTimeWeightInput extends AppCompatActivity implements View.OnCl
     public void onClick(View v) {
         Intent i;
         switch (v.getId()){
-            case R.id.cd_gender:i = new Intent(getApplicationContext(),FirstTimeActivity2.class);
+            case R.id.cd_gender:
                 //show();
                 showSex();
                 //startActivity(i);
@@ -76,11 +97,11 @@ public class FirstTimeWeightInput extends AppCompatActivity implements View.OnCl
                 showHeight();
                 break;
 
-            case R.id.cd_weight: i = new Intent(getApplicationContext(),FirstTimeActivity2.class);
+            case R.id.cd_weight:
                 showWeight();
                 //startActivity(i);
                 break;
-            case R.id.cd_target_weight: i = new Intent(getApplicationContext(),FirstTimeActivity2.class);
+            case R.id.cd_target_weight:
                 show_Target_Weight();
                 //startActivity(i);
                 break;

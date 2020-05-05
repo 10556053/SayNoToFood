@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/main_back"
+    android:background="@drawable/fitness"
     tools:context=".MainActivity">
 
     <LinearLayout
@@ -21,24 +21,27 @@
             android:layout_margin="60dp"
             android:gravity="center"
             android:text="FireBase4"
+            android:textColor="#F3FFFFFF"
             android:textSize="36sp" />
 
         <EditText
             android:id="@+id/et_email"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="36dp"
             android:layout_marginLeft="40dp"
             android:layout_marginRight="40dp"
+            android:background="#8ACCCCCC"
             android:ems="10"
             android:inputType="textPersonName" />
 
         <EditText
             android:id="@+id/et_password"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="38dp"
             android:layout_marginLeft="40dp"
             android:layout_marginTop="10dp"
             android:layout_marginRight="40dp"
+            android:background="#92CCCCCC"
             android:ems="10"
             android:inputType="textPersonName" />
 

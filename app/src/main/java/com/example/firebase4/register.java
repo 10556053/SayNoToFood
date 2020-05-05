@@ -31,22 +31,32 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.HashMap;
 import java.util.Map;
 
+
+//給陳番人:fireBase儲存資料
 public class register extends AppCompatActivity {
     public static final String TAG = "TAG";
-    private FirebaseAuth fAuth;
-    private FirebaseFirestore fStore;
+
+
+    private FirebaseAuth fAuth;//firebase登入
+
+    private FirebaseFirestore fStore;//firebase資料庫
+
     private TextView bt_return;
     private EditText et_name,et_email,et_password;
     private Button bt_register;
+
+    //userId用來代表user唯一的id
     String UserId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-
+        //設定fAuth和fStore
         fAuth = FirebaseAuth.getInstance();
         fStore=FirebaseFirestore.getInstance();
+
+
         et_email=(EditText)findViewById(R.id.et_email);
         et_name=(EditText)findViewById(R.id.et_name);
         et_password=(EditText)findViewById(R.id.et_password);
@@ -79,7 +89,8 @@ public class register extends AppCompatActivity {
                     et_password.setError("密碼長度必須大於六字元");
                     return;
                 }
-
+        //=========================================firebase query功能，用來找出使用者註冊的明子有沒有與已存在的名字重複===========================================//
+                //CollectionReference代表資料在資料庫中的參照路徑
                 CollectionReference usersRef = fStore.collection("users");
                 Query query = usersRef.whereEqualTo("name", name);//把所有等於et_name的欄位全部找出來
 
@@ -91,15 +102,19 @@ public class register extends AppCompatActivity {
                                 String user = documentSnapshot.getString("name");
 
                                 if(user.equals(name)){
+                                    //如果名子重複了
                                     Log.d(TAG, "User Exists");
                                     Toast.makeText(register.this, "Username exists", Toast.LENGTH_SHORT).show();
+                                    //setError
                                     et_name.setError("Username exists");
                                     return;
                                 }else{
+                                    //如果沒有
                                     break;
                                 }
                             }
                         }
+                        //就用她的資料註冊新帳戶
                         fAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener( new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
@@ -111,7 +126,9 @@ public class register extends AppCompatActivity {
                                             if(task.isSuccessful()){
                                                 Toast.makeText(register.this, "成功創立帳戶，請到郵箱驗證信件", Toast.LENGTH_LONG).show();
 
+                                                //userId設定為當前使用者的id
                                                 UserId=fAuth.getCurrentUser().getUid();
+                                                //創建hashmap儲存資料
                                                 Map<String, Object> data = new HashMap<>();
                                                 data.put("name", name);
                                                 data.put("email", email);
@@ -119,7 +136,11 @@ public class register extends AppCompatActivity {
                                                 data.put("images","" );
                                                 data.put("isFirstTime","yes");
                                                 //======================================================================//
+                                                //DocumentReference 為要新增/修改/的資料的路徑
+                                                //collection 是document的集合
                                                 DocumentReference documentReference=fStore.collection("users").document(UserId);//設定集合的名子為users,底下的文件以使用者id命名
+
+                                                //上船剛剛創立的data到firebase
                                                 documentReference.set(data).addOnSuccessListener(new OnSuccessListener<Void>() {
                                                     @Override
                                                     public void onSuccess(Void aVoid) {

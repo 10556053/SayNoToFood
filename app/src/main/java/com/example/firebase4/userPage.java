@@ -82,7 +82,7 @@ public class userPage extends AppCompatActivity {
 
 
         final StorageReference userIDRef= fStorage.getReference().child("User_Profile_Images").child(UserId+".jpg");
-
+//==================================這段為取得firebase 上的資料====================//
         DocumentReference documentReference=fStore.collection("users").document(UserId);
         documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
             @Override

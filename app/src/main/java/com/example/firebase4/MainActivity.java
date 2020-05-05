@@ -5,8 +5,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -15,16 +13,15 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.firebase4.FirstTimeInput.FirstTimeWeightInput;
 import com.facebook.AccessToken;
-import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
-import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
-import com.facebook.login.widget.LoginButton;
+import com.facebook.stetho.Stetho;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -40,14 +37,11 @@ import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -79,10 +73,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Stetho.initializeWithDefaults(this);
+
         et_email=(EditText)findViewById(R.id.et_email);
         et_password=(EditText)findViewById(R.id.et_password);
         bt_login=(Button)findViewById(R.id.bt_login);
-        bt_google=(Button)findViewById(R.id.bt_google);
+        bt_google=(  Button)findViewById(R.id.bt_google);
         bt_facebook=(Button)findViewById(R.id.bt_facebook) ;
         bt_create_account=(TextView)findViewById(R.id.bt_create_account);
 
@@ -103,6 +99,8 @@ public class MainActivity extends AppCompatActivity {
         }
 
     //=========================Email and Password===================================//
+        //====================to 陳番人================================//
+        //===============這段讓使用者透過register的資料登入=====//
         bt_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -247,15 +245,14 @@ public class MainActivity extends AppCompatActivity {
 
     private void updateUI(FirebaseUser user) {
         fStore=FirebaseFirestore.getInstance();
+
         GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(getApplicationContext());
         if (acct != null) {
             String personName = acct.getDisplayName();
             String photouri = user.getPhotoUrl().toString();
-            String personGivenName = acct.getGivenName();
-            String personFamilyName = acct.getFamilyName();
+
             String personEmail = acct.getEmail();
-            String personId = acct.getId();
-            //Uri personPhoto = acct.getPhotoUrl();
+
             Userid= user.getUid();
             Map<String, Object> data = new HashMap<>();
             data.put("name", personName);
@@ -338,6 +335,8 @@ public class MainActivity extends AppCompatActivity {
             initStart();
         }
     }
+    //鑒察使用者 有沒有做完初始資料設定
+    //若還沒做完:isFirstTime == yes:導道設訂出次登入資料的葉面
     private void initStart(){
         FirebaseUser user = fAuth.getCurrentUser();
         Userid = user.getUid();
@@ -348,15 +347,12 @@ public class MainActivity extends AppCompatActivity {
             public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
                 String isFirstTime = documentSnapshot.getString("isFirstTime");
                 if (isFirstTime.equals("yes")){
-                    startActivity(new Intent(getApplicationContext(),FirstTimeActivity.class));
+                    startActivity(new Intent(getApplicationContext(), FirstTimeWeightInput.class));
                 }else{
                     startActivity(new Intent(getApplicationContext(),userPage.class));
                 }
 
             }
         });
-
-
-
     }
 }

@@ -1,4 +1,4 @@
-package com.example.firebase4;
+package com.example.firebase4.FirstTimeInput;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.firebase4.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -60,21 +61,22 @@ public class FirstTimeActivity extends AppCompatActivity implements View.OnClick
 
         Intent i ;
         switch (v.getId()){
-            case R.id.cd_lose_weight:i = new Intent(getApplicationContext(),FirstTimeActivity2.class);
-                firstTimeData.put("goal",weight);
-                startActivity(i);
+            case R.id.cd_lose_weight:
+                //i = new Intent(getApplicationContext(),FirstTimeActivity2.class);
+                //firstTimeData.put("goal",weight);
+                //startActivity(i);
             break;
 
             case R.id.cd_slimmer:
-                i = new Intent(getApplicationContext(),FirstTimeActivity2.class);
-                firstTimeData.put("goal",slim);
-                startActivity(i);
+                //i = new Intent(getApplicationContext(),FirstTimeActivity2.class);
+                //firstTimeData.put("goal",slim);
+                //startActivity(i);
             break;
 
-            case R.id.cd_healthier: i = new Intent(getApplicationContext(),FirstTimeActivity2.class);
-                firstTimeData.put("goal",health);
-                startActivity(i);
-            break;
+            //case R.id.cd_healthier: i = new Intent(getApplicationContext(),FirstTimeActivity2.class);
+                //firstTimeData.put("goal",health);
+                //startActivity(i);
+            //break;
         }
         documentReference.set(firstTimeData).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
