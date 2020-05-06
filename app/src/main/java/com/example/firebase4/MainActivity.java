@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.firebase4.FirstTimeInput.FirstTimeWeightInput;
+import com.example.firebase4.userPage.userPage;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -90,13 +91,13 @@ public class MainActivity extends AppCompatActivity {
         loginManager = LoginManager.getInstance();
 
 
-        if (accessToken!= null){
+        /*if (accessToken!= null){
             //使用者為登出
             loginManager.logOut();
         }else{
             //使用者以登出
             Toast.makeText(MainActivity.this, "以登出", Toast.LENGTH_SHORT).show();
-        }
+        }*/
 
     //=========================Email and Password===================================//
         //====================to 陳番人================================//
@@ -275,13 +276,13 @@ public class MainActivity extends AppCompatActivity {
         }
     }
     //==============FaceBook SignIn Functions========================//
-    @Override
+    /*@Override
     public void onStart() {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = fAuth.getCurrentUser();
         updateUI(currentUser);
-    }
+    }*/
     private void handleFacebookAccessToken(AccessToken token) {
         Log.d(TAG, "handleFacebookAccessToken:" + token);
 
@@ -349,7 +350,7 @@ public class MainActivity extends AppCompatActivity {
                 if (isFirstTime.equals("yes")){
                     startActivity(new Intent(getApplicationContext(), FirstTimeWeightInput.class));
                 }else{
-                    startActivity(new Intent(getApplicationContext(),userPage.class));
+                    startActivity(new Intent(getApplicationContext(), userPage.class));
                 }
 
             }

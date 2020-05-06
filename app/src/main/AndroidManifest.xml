@@ -21,10 +21,10 @@
 
         <activity android:name=".MainActivity" />
         <activity android:name=".HomePageActivity" />
-        <activity android:name=".FastEventScheduler" />
+        <activity android:name=".FirstTimeInput.FastEventScheduler" />
         <activity android:name=".FirstTimeInput.FirstTimeWeightInput" />
         <activity android:name=".FirstTimeInput.FirstTimeActivity" />
-        <activity android:name=".userPage" />
+        <activity android:name=".userPage.userPage" />
         <activity android:name=".register" />
         <activity android:name=".FirstTimeInput.WelcomeActivity">
             <intent-filter>

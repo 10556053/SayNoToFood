@@ -41,7 +41,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:paddingLeft="20dp"
-                    android:text="我是斷食新手"
+                    android:text="我是斷食新手，每天禁食一餐"
                     android:textSize="18sp" />
 
                 <androidx.cardview.widget.CardView
@@ -76,7 +76,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="20dp"
                                 android:layout_weight="0"
-                                android:text="初級"
+                                android:text="16/8斷食法"
                                 android:textSize="18sp" />
 
                             <TextView
@@ -85,7 +85,9 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="10dp"
                                 android:layout_marginRight="20dp"
-                                android:text="每周有三天的休息日，禁食日有8小時的進食時間" />
+                                android:text="每天有16個小時的禁食時間，8小時的可進食時間"
+
+                                />
                         </LinearLayout>
 
                     </LinearLayout>
@@ -124,7 +126,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="20dp"
                                 android:layout_weight="0"
-                                android:text="中級"
+                                android:text="15/9斷食法"
                                 android:textSize="18sp" />
 
                             <TextView
@@ -133,7 +135,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="10dp"
                                 android:layout_marginRight="20dp"
-                                android:text="每周有兩天的休息日，禁食日有7小時的進食時間" />
+                                android:text="每天有15個小時的禁食時間，9小時的可進食時間" />
                         </LinearLayout>
 
                     </LinearLayout>
@@ -171,7 +173,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="20dp"
                                 android:layout_weight="0"
-                                android:text="高級"
+                                android:text="14/10斷食法"
                                 android:textSize="18sp" />
 
                             <TextView
@@ -180,7 +182,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="10dp"
                                 android:layout_marginRight="20dp"
-                                android:text="每周有兩天的休息日，禁食日有6小時的進食時間" />
+                                android:text="每天有14個小時的禁食時間，10小時的可進食時間" />
                         </LinearLayout>
 
                     </LinearLayout>
@@ -198,7 +200,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:paddingLeft="20dp"
-                    android:text="我斷食經驗身經百戰"
+                    android:text="我有斷食經驗，每天禁食兩餐"
                     android:textSize="18sp" />
 
                 <androidx.cardview.widget.CardView
@@ -233,7 +235,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="20dp"
                                 android:layout_weight="0"
-                                android:text="硬核"
+                                android:text="19/5斷食法"
                                 android:textSize="18sp" />
 
                             <TextView
@@ -242,7 +244,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="10dp"
                                 android:layout_marginRight="20dp"
-                                android:text="每周有三天的休息日，禁食日有8小時的進食時間" />
+                                android:text="每天有19個小時的禁食時間，5小時的可進食時間" />
                         </LinearLayout>
 
                     </LinearLayout>
@@ -281,7 +283,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="20dp"
                                 android:layout_weight="0"
-                                android:text="完美"
+                                android:text="20/4斷食法"
                                 android:textSize="18sp" />
 
                             <TextView
@@ -290,7 +292,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="10dp"
                                 android:layout_marginRight="20dp"
-                                android:text="每周有兩天的休息日，禁食日有7小時的進食時間" />
+                                android:text="每天有20個小時的禁食時間，4小時的可進食時間" />
                         </LinearLayout>
 
                     </LinearLayout>
@@ -328,7 +330,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="20dp"
                                 android:layout_weight="0"
-                                android:text="不可思議"
+                                android:text="22/2斷食法"
                                 android:textSize="18sp" />
 
                             <TextView
@@ -337,7 +339,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="10dp"
                                 android:layout_marginRight="20dp"
-                                android:text="每周有兩天的休息日，禁食日有6小時的進食時間" />
+                                android:text="每天有22個小時的禁食時間，2小時的可進食時間" />
                         </LinearLayout>
 
                     </LinearLayout>

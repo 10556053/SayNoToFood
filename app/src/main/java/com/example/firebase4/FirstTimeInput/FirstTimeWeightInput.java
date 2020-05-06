@@ -15,7 +15,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.firebase4.DataBase.SQLiteDataBaseHelper;
-import com.example.firebase4.FastEventScheduler;
 import com.example.firebase4.InputDialog.HeightInputDialog;
 import com.example.firebase4.InputDialog.SexInputDialog;
 import com.example.firebase4.InputDialog.TargetWeightInputDialog;

@@ -1,4 +1,4 @@
-package com.example.firebase4;
+package com.example.firebase4.FirstTimeInput;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.example.firebase4.DataBase.SQLiteDataBaseHelper;
+import com.example.firebase4.R;
 import com.example.firebase4.WeekView.ShowWeekView;
 import com.facebook.stetho.Stetho;
 

@@ -58,7 +58,7 @@ public class WelcomeActivity extends AppCompatActivity {
 
                 if(current_page > (mdots.length)){
 
-                    Intent i = new Intent(WelcomeActivity.this, MainActivity.class);
+                    Intent i = new Intent(WelcomeActivity.this, TutorialVideo.class);
                     startActivity(i);
                 }
 
