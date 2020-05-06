@@ -15,10 +15,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.firebase4.DataBase.SQLiteDataBaseHelper;
-import com.example.firebase4.InputDialog.HeightInputDialog;
-import com.example.firebase4.InputDialog.SexInputDialog;
-import com.example.firebase4.InputDialog.TargetWeightInputDialog;
-import com.example.firebase4.InputDialog.WeightInputDialog;
+import com.example.firebase4.Dialogs.HeightInputDialog;
+import com.example.firebase4.Dialogs.SexInputDialog;
+import com.example.firebase4.Dialogs.TargetWeightInputDialog;
+import com.example.firebase4.Dialogs.WeightInputDialog;
 import com.example.firebase4.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;

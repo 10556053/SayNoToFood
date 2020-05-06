@@ -1,4 +1,4 @@
-package com.example.firebase4.InputDialog;
+package com.example.firebase4.Dialogs;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -25,10 +25,10 @@ import com.google.firebase.firestore.SetOptions;
 import java.util.HashMap;
 import java.util.Map;
 
-public class SexInputDialog extends AppCompatDialogFragment implements NumberPicker.OnValueChangeListener {
-    private NumberPicker sp;
-    private TextView tv_display_cur_sex;
-    private SexInputDialogListener sexInputDialogListener;
+public class WeightInputDialog extends AppCompatDialogFragment implements NumberPicker.OnValueChangeListener {
+    private NumberPicker np;
+    private TextView tv_display_cur_num;
+    private WeightInputDialogListener weightInputDialogListener;
 
 
 
@@ -39,26 +39,23 @@ public class SexInputDialog extends AppCompatDialogFragment implements NumberPic
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
 
-        final String[] genders = getResources().getStringArray(R.array.genders);
-
         fAuth=FirebaseAuth.getInstance();
         fStore=FirebaseFirestore.getInstance();
         UserId=fAuth.getCurrentUser().getUid();
         AlertDialog.Builder builder= new AlertDialog.Builder(getActivity());
 
         LayoutInflater inflater= getActivity().getLayoutInflater();
-        View view = inflater.inflate(R.layout.sexpicker,null);
-        sp=view.findViewById(R.id.sex_picker);
-        sp.setMaxValue(genders.length-1);
-        sp.setMinValue(0);
-        sp.setDisplayedValues(genders);
-
-        sp.setWrapSelectorWheel(false);
-        sp.setOnValueChangedListener(this);
-        tv_display_cur_sex=view.findViewById(R.id.tv_display_cur_sex);
+        View view = inflater.inflate(R.layout.numberpicker,null);
+        np=view.findViewById(R.id.num_picker);
+        np.setMaxValue(100);
+        np.setMinValue(0);
+        np.setValue(80);
+        np.setWrapSelectorWheel(false);
+        np.setOnValueChangedListener(this);
+        tv_display_cur_num=view.findViewById(R.id.tv_display_cur_num);
 
         builder.setView(view);
-        builder.setTitle("Pick ur gender");
+        builder.setTitle("Pick ur weight");
         builder.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -68,12 +65,12 @@ public class SexInputDialog extends AppCompatDialogFragment implements NumberPic
         builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                int i = sp.getValue();
-                String sex = genders[i];
-                sexInputDialogListener.applySex(sex);
+                int i = np.getValue();
+                String weight = Integer.toString(i);
+                weightInputDialogListener.applyWeight(weight);
                 DocumentReference documentReference = fStore.collection("users").document(UserId).collection("bodyData").document("my_body_data");
                 Map<String, Object> myBodyData = new HashMap<>();
-                myBodyData.put("current_sex", sex);
+                myBodyData.put("current_weight", i);
                 documentReference.set(myBodyData, SetOptions.merge()).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
@@ -94,17 +91,17 @@ public class SexInputDialog extends AppCompatDialogFragment implements NumberPic
         super.onAttach(context);
         //ctrl + alt + t 自動生成try_catch
         try {
-            sexInputDialogListener=(SexInputDialogListener)context;
+            weightInputDialogListener=(WeightInputDialogListener)context;
         } catch (ClassCastException e) {
             throw  new ClassCastException(context.toString()+"must implement WeightInputDialogListener");
         }
     }
     @Override
     public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-
+        tv_display_cur_num.setText(newVal+"公斤");
     }
 
-    public interface SexInputDialogListener{
-        void applySex(String sex);
+    public interface WeightInputDialogListener{
+        void applyWeight(String weight);
     }
 }

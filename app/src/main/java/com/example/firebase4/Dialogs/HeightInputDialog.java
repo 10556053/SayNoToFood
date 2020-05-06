@@ -1,4 +1,4 @@
-package com.example.firebase4.InputDialog;
+package com.example.firebase4.Dialogs;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.NumberPicker;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -26,10 +25,10 @@ import com.google.firebase.firestore.SetOptions;
 import java.util.HashMap;
 import java.util.Map;
 
-public class WeightInputDialog extends AppCompatDialogFragment implements NumberPicker.OnValueChangeListener {
-    private NumberPicker np;
-    private TextView tv_display_cur_num;
-    private WeightInputDialogListener weightInputDialogListener;
+public class HeightInputDialog extends AppCompatDialogFragment implements NumberPicker.OnValueChangeListener {
+    private NumberPicker hp;
+    private TextView tv_display_cur_height;
+    private HeightInputDialogListener heightInputDialogListener;
 
 
 
@@ -46,14 +45,14 @@ public class WeightInputDialog extends AppCompatDialogFragment implements Number
         AlertDialog.Builder builder= new AlertDialog.Builder(getActivity());
 
         LayoutInflater inflater= getActivity().getLayoutInflater();
-        View view = inflater.inflate(R.layout.numberpicker,null);
-        np=view.findViewById(R.id.num_picker);
-        np.setMaxValue(100);
-        np.setMinValue(0);
-        np.setValue(80);
-        np.setWrapSelectorWheel(false);
-        np.setOnValueChangedListener(this);
-        tv_display_cur_num=view.findViewById(R.id.tv_display_cur_num);
+        View view = inflater.inflate(R.layout.heightpicker,null);
+        hp=view.findViewById(R.id.height_picker);
+        hp.setMaxValue(250);
+        hp.setMinValue(100);
+        hp.setValue(150);
+        hp.setWrapSelectorWheel(false);
+        hp.setOnValueChangedListener(this);
+        tv_display_cur_height=view.findViewById(R.id.tv_display_cur_height);
 
         builder.setView(view);
         builder.setTitle("Pick ur weight");
@@ -66,12 +65,12 @@ public class WeightInputDialog extends AppCompatDialogFragment implements Number
         builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                int i = np.getValue();
-                String weight = Integer.toString(i);
-                weightInputDialogListener.applyWeight(weight);
+                int i = hp.getValue();
+                String height = Integer.toString(i);
+                heightInputDialogListener.applyHeight(height);
                 DocumentReference documentReference = fStore.collection("users").document(UserId).collection("bodyData").document("my_body_data");
                 Map<String, Object> myBodyData = new HashMap<>();
-                myBodyData.put("current_weight", i);
+                myBodyData.put("current_height", i);
                 documentReference.set(myBodyData, SetOptions.merge()).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
@@ -92,17 +91,17 @@ public class WeightInputDialog extends AppCompatDialogFragment implements Number
         super.onAttach(context);
         //ctrl + alt + t 自動生成try_catch
         try {
-            weightInputDialogListener=(WeightInputDialogListener)context;
+            heightInputDialogListener=(HeightInputDialogListener)context;
         } catch (ClassCastException e) {
             throw  new ClassCastException(context.toString()+"must implement WeightInputDialogListener");
         }
     }
     @Override
     public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-        tv_display_cur_num.setText(newVal+"公斤");
+        tv_display_cur_height.setText(newVal+"公分");
     }
 
-    public interface WeightInputDialogListener{
-        void applyWeight(String weight);
+    public interface HeightInputDialogListener{
+        void applyHeight(String height);
     }
 }

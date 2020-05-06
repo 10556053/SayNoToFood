@@ -1,4 +1,4 @@
-package com.example.firebase4.InputDialog;
+package com.example.firebase4.Dialogs;
 
 import android.app.AlertDialog;
 import android.app.Dialog;

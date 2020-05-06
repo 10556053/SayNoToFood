@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -66,7 +65,7 @@ public class WelcomePagerAdapter extends PagerAdapter {
         View view = layoutInflater.inflate(R.layout.slider_layout,container,false);
 
         ImageView img_show = (ImageView) view.findViewById(R.id.img_show);
-        TextView tv_title = (TextView) view.findViewById(R.id.tv_title);
+        TextView tv_title = (TextView) view.findViewById(R.id.tv_title1);
         TextView tv_description=(TextView) view.findViewById(R.id.tv_description);
 
         img_show.setImageResource(slideImage[position]);

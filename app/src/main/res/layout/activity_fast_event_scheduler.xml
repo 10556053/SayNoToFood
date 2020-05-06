@@ -22,12 +22,13 @@
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            >
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical" >
+                android:orientation="vertical">
 
                 <View
                     android:layout_width="match_parent"
@@ -51,7 +52,7 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginRight="20dp"
-                    app:cardCornerRadius="5dp">
+                    app:cardCornerRadius="20dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -141,6 +142,7 @@
                     </LinearLayout>
 
                 </androidx.cardview.widget.CardView>
+
                 <androidx.cardview.widget.CardView
                     android:id="@+id/cd_advanced"
                     android:layout_width="match_parent"
@@ -188,6 +190,7 @@
                     </LinearLayout>
 
                 </androidx.cardview.widget.CardView>
+
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
@@ -298,6 +301,7 @@
                     </LinearLayout>
 
                 </androidx.cardview.widget.CardView>
+
                 <androidx.cardview.widget.CardView
                     android:id="@+id/cd_incredible"
                     android:layout_width="match_parent"

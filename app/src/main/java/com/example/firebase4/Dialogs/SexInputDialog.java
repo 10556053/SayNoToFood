@@ -1,4 +1,4 @@
-package com.example.firebase4.InputDialog;
+package com.example.firebase4.Dialogs;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -25,10 +25,10 @@ import com.google.firebase.firestore.SetOptions;
 import java.util.HashMap;
 import java.util.Map;
 
-public class HeightInputDialog extends AppCompatDialogFragment implements NumberPicker.OnValueChangeListener {
-    private NumberPicker hp;
-    private TextView tv_display_cur_height;
-    private HeightInputDialogListener heightInputDialogListener;
+public class SexInputDialog extends AppCompatDialogFragment implements NumberPicker.OnValueChangeListener {
+    private NumberPicker sp;
+    private TextView tv_display_cur_sex;
+    private SexInputDialogListener sexInputDialogListener;
 
 
 
@@ -39,23 +39,26 @@ public class HeightInputDialog extends AppCompatDialogFragment implements Number
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
 
+        final String[] genders = getResources().getStringArray(R.array.genders);
+
         fAuth=FirebaseAuth.getInstance();
         fStore=FirebaseFirestore.getInstance();
         UserId=fAuth.getCurrentUser().getUid();
         AlertDialog.Builder builder= new AlertDialog.Builder(getActivity());
 
         LayoutInflater inflater= getActivity().getLayoutInflater();
-        View view = inflater.inflate(R.layout.heightpicker,null);
-        hp=view.findViewById(R.id.height_picker);
-        hp.setMaxValue(250);
-        hp.setMinValue(100);
-        hp.setValue(150);
-        hp.setWrapSelectorWheel(false);
-        hp.setOnValueChangedListener(this);
-        tv_display_cur_height=view.findViewById(R.id.tv_display_cur_height);
+        View view = inflater.inflate(R.layout.sexpicker,null);
+        sp=view.findViewById(R.id.sex_picker);
+        sp.setMaxValue(genders.length-1);
+        sp.setMinValue(0);
+        sp.setDisplayedValues(genders);
+
+        sp.setWrapSelectorWheel(false);
+        sp.setOnValueChangedListener(this);
+        tv_display_cur_sex=view.findViewById(R.id.tv_display_cur_sex);
 
         builder.setView(view);
-        builder.setTitle("Pick ur weight");
+        builder.setTitle("Pick ur gender");
         builder.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -65,12 +68,12 @@ public class HeightInputDialog extends AppCompatDialogFragment implements Number
         builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                int i = hp.getValue();
-                String height = Integer.toString(i);
-                heightInputDialogListener.applyHeight(height);
+                int i = sp.getValue();
+                String sex = genders[i];
+                sexInputDialogListener.applySex(sex);
                 DocumentReference documentReference = fStore.collection("users").document(UserId).collection("bodyData").document("my_body_data");
                 Map<String, Object> myBodyData = new HashMap<>();
-                myBodyData.put("current_height", i);
+                myBodyData.put("current_sex", sex);
                 documentReference.set(myBodyData, SetOptions.merge()).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
@@ -91,17 +94,17 @@ public class HeightInputDialog extends AppCompatDialogFragment implements Number
         super.onAttach(context);
         //ctrl + alt + t 自動生成try_catch
         try {
-            heightInputDialogListener=(HeightInputDialogListener)context;
+            sexInputDialogListener=(SexInputDialogListener)context;
         } catch (ClassCastException e) {
             throw  new ClassCastException(context.toString()+"must implement WeightInputDialogListener");
         }
     }
     @Override
     public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-        tv_display_cur_height.setText(newVal+"公分");
+
     }
 
-    public interface HeightInputDialogListener{
-        void applyHeight(String height);
+    public interface SexInputDialogListener{
+        void applySex(String sex);
     }
 }

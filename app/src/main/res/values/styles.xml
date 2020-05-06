@@ -18,4 +18,11 @@
         <item name="colorControlActivated">@color/accent</item>
     </style>
 
+    <style name="CardViewRadius">
+
+
+        <item name="cardBackgroundColor">@color/light_green02</item>
+        <item name="cardCornerRadius">18dp</item>
+    </style>
+
 </resources>

@@ -4,12 +4,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import androidx.cardview.widget.CardView;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 
 import com.example.firebase4.DataBase.SQLiteDataBaseHelper;
+import com.example.firebase4.Dialogs.Custom_AlertDialog;
 import com.example.firebase4.R;
 import com.example.firebase4.WeekView.ShowWeekView;
 import com.facebook.stetho.Stetho;
@@ -19,7 +21,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 public class FastEventScheduler extends AppCompatActivity implements View.OnClickListener{
-
+    Dialog alert_Dialog;
     private CardView cd_novice,cd_experienced,cd_advanced,cd_hardcore,cd_perfect,cd_incredible;
 
     public SQLiteDatabase db;
@@ -54,19 +56,33 @@ public class FastEventScheduler extends AppCompatActivity implements View.OnClic
         switch (v.getId()){
 
             case R.id.cd_novice:
-                putDataNovice();
+                openAlertDialog(0);
+                //putDataNovice();
 
         }
         switch (v.getId()){
             case R.id.cd_experienced:
-                putDataAdvanced();
+                openAlertDialog(1);
+                //putDataAdvanced();
 
         }
         switch (v.getId()){
             case R.id.cd_advanced:
-                putDataHard();
+                openAlertDialog(2);
+                //putDataHard();
 
         }
+
+    }
+
+    private void openAlertDialog(int fastType) {
+
+        Custom_AlertDialog alertDialog = new Custom_AlertDialog();
+        Bundle bundle = new Bundle();
+        bundle.putInt("fastType",fastType);
+
+        alertDialog.setArguments(bundle);
+        alertDialog.show(getSupportFragmentManager(),"date_input_dialog");
 
     }
 
