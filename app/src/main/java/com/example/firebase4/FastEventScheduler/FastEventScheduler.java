@@ -72,6 +72,24 @@ public class FastEventScheduler extends AppCompatActivity implements View.OnClic
                 //putDataHard();
 
         }
+        switch (v.getId()){
+            case R.id.cd_hardcore:
+                openAlertDialog(3);
+                //putDataHard();
+
+        }
+        switch (v.getId()){
+            case R.id.cd_perfect:
+                openAlertDialog(4);
+                //putDataHard();
+
+        }
+        switch (v.getId()){
+            case R.id.cd_incredible:
+                openAlertDialog(5);
+                //putDataHard();
+
+        }
 
     }
 

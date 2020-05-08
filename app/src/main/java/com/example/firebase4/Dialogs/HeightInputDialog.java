@@ -89,7 +89,7 @@ public class HeightInputDialog extends AppCompatDialogFragment implements Number
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        //ctrl + alt + t 自動生成try_catch
+        //ctrl + alt + t 生成try_catch
         try {
             heightInputDialogListener=(HeightInputDialogListener)context;
         } catch (ClassCastException e) {

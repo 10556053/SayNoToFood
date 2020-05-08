@@ -1,9 +1,11 @@
 package com.example.firebase4.Dialogs;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.NumberPicker;
 import android.widget.TextView;
 
@@ -20,6 +22,8 @@ public class Fast_Time_Scheduler_Dialog extends DialogFragment implements Number
     private NumberPicker np_start_hour;
     private NumberPicker np_start_minute;
     private TextView tv_am,tv_pm, tv_endHour,tv_endMinute,tv_end_am_pm;
+    private FasTimeInputDialogListener fasTimeInputDialogListener;
+    private Button bt_time_select_done;
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
@@ -34,6 +38,7 @@ public class Fast_Time_Scheduler_Dialog extends DialogFragment implements Number
         np_start_minute = view.findViewById(R.id.np_start_minute);
         tv_am = view.findViewById(R.id.tv_am);
         tv_pm = view.findViewById(R.id.tv_pm);
+        bt_time_select_done = view.findViewById(R.id.bt_time_select_done);
 
 
         np_start_hour.setOnValueChangedListener(this);
@@ -41,8 +46,8 @@ public class Fast_Time_Scheduler_Dialog extends DialogFragment implements Number
         //=================================獲取activity傳來的資訊=========================================//
 
         Bundle bundle = getArguments();
-        int fastType = bundle.getInt("fastType");
-        int weekday = bundle.getInt("weekday");
+        final int fastType = bundle.getInt("fastType");
+        final int weekday = bundle.getInt("weekday");
 
         //==============================設定NumberPicker====================================//
 
@@ -68,6 +73,26 @@ public class Fast_Time_Scheduler_Dialog extends DialogFragment implements Number
                 np_start_hour.setValue(12);
                 break;
 
+            //19/5
+            case 3:
+                np_start_hour.setMinValue(8);
+                np_start_hour.setMaxValue(18);
+                np_start_hour.setValue(12);
+                break;
+
+            //20/4
+            case 4:
+                np_start_hour.setMinValue(8);
+                np_start_hour.setMaxValue(19);
+                np_start_hour.setValue(12);
+                break;
+            //22/2
+            case 5:
+                np_start_hour.setMinValue(8);
+                np_start_hour.setMaxValue(20);
+                np_start_hour.setValue(12);
+                break;
+
         }
 
 
@@ -85,9 +110,53 @@ public class Fast_Time_Scheduler_Dialog extends DialogFragment implements Number
 
         np_start_hour.setDisplayedValues( numberList );
 
+        bt_time_select_done.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int hour = np_start_hour.getValue();
+                int minute = np_start_minute.getValue();
+                int fastHour = 0;
+                switch (fastType){
+
+                    case 0:
+                        fastHour = 8;
+                        break;
+                    case 1:
+                        fastHour = 9;
+                        break;
+                    case 2:
+                        fastHour = 10;
+                        break;
+                    case 3:
+                        fastHour = 5;
+                        break;
+                    case 4:
+                        fastHour = 4;
+                        break;
+                    case 5:
+                        fastHour = 2;
+                        break;
+                }
+
+                fasTimeInputDialogListener.apply_time(weekday,fastHour,hour,minute);
+
+                dismiss();
+
+            }
+        });
 
         builder.setView(view);
         return builder.create();
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        try {
+            fasTimeInputDialogListener = (FasTimeInputDialogListener)context;
+        }catch (ClassCastException e){
+            throw  new ClassCastException(context.toString()+"must implement WeightInputDialogListener");
+        }
     }
 
     @Override
@@ -100,5 +169,9 @@ public class Fast_Time_Scheduler_Dialog extends DialogFragment implements Number
             tv_pm.setTextSize(16);
             tv_am.setTextSize(22);
         }
+    }
+
+    public interface FasTimeInputDialogListener{
+        void apply_time(int weekday,int fastHour,int hour,int minute);
     }
 }
