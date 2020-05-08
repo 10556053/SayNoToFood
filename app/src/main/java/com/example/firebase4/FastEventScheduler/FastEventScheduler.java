@@ -1,4 +1,4 @@
-package com.example.firebase4.FirstTimeInput;
+package com.example.firebase4.FastEventScheduler;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -115,7 +115,7 @@ public class FastEventScheduler extends AppCompatActivity implements View.OnClic
             startTime.set(Calendar.SECOND,0);
 
             String st_startTime = df.format(startTime.getTime());
-            sqLiteDataBaseHelper.putInNoviceTable(st_startTime,duration);
+            //sqLiteDataBaseHelper.putInNoviceTable(st_startTime,duration);
         }
 
         Intent i = new Intent(getApplicationContext(), ShowWeekView.class);
@@ -146,7 +146,7 @@ public class FastEventScheduler extends AppCompatActivity implements View.OnClic
             startTime.set(Calendar.SECOND,0);
 
             String st_startTime = df.format(startTime.getTime());
-            sqLiteDataBaseHelper.putInAdvancedTable(st_startTime,duration);
+            //sqLiteDataBaseHelper.putInAdvancedTable(st_startTime,duration);
         }
 
         Intent i = new Intent(getApplicationContext(), ShowWeekView.class);
@@ -177,7 +177,7 @@ public class FastEventScheduler extends AppCompatActivity implements View.OnClic
             startTime.set(Calendar.SECOND,0);
 
             String st_startTime = df.format(startTime.getTime());
-            sqLiteDataBaseHelper.putInHardTable(st_startTime,duration);
+            //sqLiteDataBaseHelper.putInHardTable(st_startTime,duration);
         }
 
         Intent i = new Intent(getApplicationContext(), ShowWeekView.class);

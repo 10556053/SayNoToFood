@@ -19,6 +19,7 @@ import com.example.firebase4.Dialogs.HeightInputDialog;
 import com.example.firebase4.Dialogs.SexInputDialog;
 import com.example.firebase4.Dialogs.TargetWeightInputDialog;
 import com.example.firebase4.Dialogs.WeightInputDialog;
+import com.example.firebase4.FastEventScheduler.FastEventScheduler;
 import com.example.firebase4.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;

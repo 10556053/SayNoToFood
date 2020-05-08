@@ -12,7 +12,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
+import com.example.firebase4.FastEventScheduler.EventTimePicker;
+import com.example.firebase4.FirstTimeInput.FirstTimeWeightInput;
 import com.example.firebase4.R;
+
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class Custom_AlertDialog extends DialogFragment {
 
@@ -31,8 +35,8 @@ public class Custom_AlertDialog extends DialogFragment {
         content = view.findViewById(R.id.tv_content);
         alert_bt = view.findViewById(R.id.alert_bt);
 
-        Bundle bundle = getArguments();
-        int fastType = bundle.getInt("fastType");
+        final Bundle bundle = getArguments();
+        final int fastType = bundle.getInt("fastType");
         String[] title = {
                 "16/8斷食法",
                 "15/9斷食法",
@@ -51,7 +55,12 @@ public class Custom_AlertDialog extends DialogFragment {
         alert_bt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Bundle bundle1 = new Bundle();
+                bundle1.putInt("fastType",fastType);
 
+                Intent i = new Intent(getApplicationContext(),EventTimePicker.class);
+                i.putExtras(bundle1);
+                startActivity(i);
             }
         });
 
