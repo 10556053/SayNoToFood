@@ -148,15 +148,16 @@ public class Fast_Time_Scheduler_Dialog extends DialogFragment implements Number
                         fastHour = 2;
                         break;
                 }
+                //sqLite更新的資料
                 SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss");
                 Calendar c = Calendar.getInstance();
                 c.set(Calendar.HOUR_OF_DAY,hour);
                 c.set(Calendar.MINUTE,minute);
                 c.set(Calendar.SECOND,0);
-
                 String st_starTime = df.format(c.getTime());
-
+                //呼叫更新方法
                 updateData(context,weekday,st_starTime,fastHour);
+
                 fasTimeInputDialogListener.apply_time(weekday,fastHour,hour,minute);
                 dismiss();
 
@@ -172,9 +173,7 @@ public class Fast_Time_Scheduler_Dialog extends DialogFragment implements Number
         db=sqLiteDataBaseHelper.getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
-
         contentValues.put("STARTIME",startime);
-
 
         db.update(USER_WEEK_PLAN, contentValues, "WEEKDAY = " + weekday, null);
 

@@ -24,21 +24,21 @@ public class SQLiteDataBaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         //創建資料表
-         String table_novice = "CREATE TABLE IF NOT EXISTS " + USER_WEEK_PLAN + "( " +
+         String table_user_week_plan = "CREATE TABLE IF NOT EXISTS " + USER_WEEK_PLAN + "( " +
                 "_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                  "WEEKDAY INTEGER ," +
                  "STARTIME VARCHAR(50) ," +
                 "DURATION INTEGER " +
                 ");";
-        String table_advanced = "CREATE TABLE IF NOT EXISTS " + USER_FAST_HISTORY + "( " +
+        String table_user_fast_history = "CREATE TABLE IF NOT EXISTS " + USER_FAST_HISTORY + "( " +
                 "_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "STARTIME VARCHAR(50) ," +
                 "DURATION INTEGER " +
                 ");";
 
 
-        db.execSQL(table_novice);
-        db.execSQL(table_advanced);
+        db.execSQL(table_user_week_plan);
+        db.execSQL(table_user_fast_history);
 
 
     }
