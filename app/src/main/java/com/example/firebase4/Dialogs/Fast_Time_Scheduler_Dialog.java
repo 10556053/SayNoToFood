@@ -1,7 +1,9 @@
 package com.example.firebase4.Dialogs;
 
 import android.app.Dialog;
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,17 +15,24 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
+import com.example.firebase4.DataBase.SQLiteDataBaseHelper;
+import com.example.firebase4.FastEventScheduler.FastEventScheduler;
 import com.example.firebase4.R;
+import com.facebook.stetho.Stetho;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class Fast_Time_Scheduler_Dialog extends DialogFragment implements NumberPicker.OnValueChangeListener{
-
+    public static final String USER_WEEK_PLAN="user_week_plan";
     private NumberPicker np_start_hour;
     private NumberPicker np_start_minute;
     private TextView tv_am,tv_pm, tv_endHour,tv_endMinute,tv_end_am_pm;
     private FasTimeInputDialogListener fasTimeInputDialogListener;
     private Button bt_time_select_done;
+    public SQLiteDatabase db;
+    public SQLiteDataBaseHelper sqLiteDataBaseHelper;
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
@@ -31,6 +40,7 @@ public class Fast_Time_Scheduler_Dialog extends DialogFragment implements Number
         android.app.AlertDialog.Builder builder= new android.app.AlertDialog.Builder(getActivity());
         LayoutInflater inflater= getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.fast_time_scheduler_dialog,null);
+         final Context context = builder.getContext();
 
         //==================================定義參照=======================================//
 
@@ -110,6 +120,7 @@ public class Fast_Time_Scheduler_Dialog extends DialogFragment implements Number
 
         np_start_hour.setDisplayedValues( numberList );
 
+//====================bt done clicked================================================
         bt_time_select_done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -137,9 +148,16 @@ public class Fast_Time_Scheduler_Dialog extends DialogFragment implements Number
                         fastHour = 2;
                         break;
                 }
+                SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss");
+                Calendar c = Calendar.getInstance();
+                c.set(Calendar.HOUR_OF_DAY,hour);
+                c.set(Calendar.MINUTE,minute);
+                c.set(Calendar.SECOND,0);
 
+                String st_starTime = df.format(c.getTime());
+
+                updateData(context,weekday,st_starTime,fastHour);
                 fasTimeInputDialogListener.apply_time(weekday,fastHour,hour,minute);
-
                 dismiss();
 
             }
@@ -147,6 +165,20 @@ public class Fast_Time_Scheduler_Dialog extends DialogFragment implements Number
 
         builder.setView(view);
         return builder.create();
+    }
+
+    private void updateData(Context c ,int weekday,String startime, int duration) {
+        sqLiteDataBaseHelper = new SQLiteDataBaseHelper(c);
+        db=sqLiteDataBaseHelper.getWritableDatabase();
+
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put("STARTIME",startime);
+
+
+        db.update(USER_WEEK_PLAN, contentValues, "WEEKDAY = " + weekday, null);
+
+
     }
 
     @Override

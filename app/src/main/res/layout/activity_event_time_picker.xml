@@ -69,8 +69,7 @@
                                 android:id="@+id/tv_showTime_Mon"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="20dp"
-                                android:text="TextView" />
+                                android:layout_marginTop="20dp" />
                         </LinearLayout>
 
                     </LinearLayout>
@@ -114,8 +113,7 @@
                                 android:id="@+id/tv_showTime_Tue"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="20dp"
-                                android:text="TextView" />
+                                android:layout_marginTop="20dp" />
                         </LinearLayout>
 
                     </LinearLayout>
@@ -159,8 +157,7 @@
                                 android:id="@+id/tv_showTime_Wed"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="10dp"
-                                android:text="TextView" />
+                                android:layout_marginTop="10dp" />
                         </LinearLayout>
 
                     </LinearLayout>
@@ -204,9 +201,7 @@
                                 android:id="@+id/tv_showTime_Thu"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="10dp"
-                                android:layout_weight="1"
-                                android:text="TextView" />
+                                android:layout_marginTop="10dp" />
                         </LinearLayout>
 
                     </LinearLayout>
@@ -250,8 +245,7 @@
                                 android:id="@+id/tv_showTime_Fri"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="10dp"
-                                android:text="TextView" />
+                                android:layout_marginTop="10dp" />
                         </LinearLayout>
 
                     </LinearLayout>
@@ -295,8 +289,7 @@
                                 android:id="@+id/tv_showTime_Sat"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="10dp"
-                                android:text="TextView" />
+                                android:layout_marginTop="10dp" />
                         </LinearLayout>
 
                     </LinearLayout>
@@ -340,8 +333,7 @@
                                 android:id="@+id/tv_showTime_Sun"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="10dp"
-                                android:text="TextView" />
+                                android:layout_marginTop="10dp" />
                         </LinearLayout>
 
                     </LinearLayout>
