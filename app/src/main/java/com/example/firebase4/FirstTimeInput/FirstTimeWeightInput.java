@@ -63,15 +63,7 @@ public class FirstTimeWeightInput extends AppCompatActivity implements View.OnCl
         bt_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sqLiteDataBaseHelper = new SQLiteDataBaseHelper(FirstTimeWeightInput.this);
-                db=sqLiteDataBaseHelper.getWritableDatabase();
-                db.execSQL("delete from table_novice" );
-                db.execSQL("UPDATE sqlite_sequence SET seq = 0 WHERE name = 'table_novice'");
-                db.execSQL("delete from table_advanced" );
-                db.execSQL("UPDATE sqlite_sequence SET seq = 0 WHERE name = 'table_advanced'");
-                db.execSQL("delete from table_hard" );
-                db.execSQL("UPDATE sqlite_sequence SET seq = 0 WHERE name = 'table_hard'");
-                Toast.makeText(FirstTimeWeightInput.this , "已刪除",  Toast.LENGTH_SHORT).show();
+
                 Intent i = new Intent(getApplicationContext(), FastEventScheduler.class);
                 startActivity(i);
             }

@@ -67,6 +67,7 @@ public class Custom_AlertDialog extends DialogFragment {
                 Intent i = new Intent(getApplicationContext(),EventTimePicker.class);
                 i.putExtras(bundle1);
                 startActivity(i);
+                dismiss();
             }
         });
 

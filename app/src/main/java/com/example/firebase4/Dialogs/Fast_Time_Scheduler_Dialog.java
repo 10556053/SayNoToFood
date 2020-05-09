@@ -174,4 +174,6 @@ public class Fast_Time_Scheduler_Dialog extends DialogFragment implements Number
     public interface FasTimeInputDialogListener{
         void apply_time(int weekday,int fastHour,int hour,int minute);
     }
+
+
 }

@@ -108,7 +108,6 @@ public class EventTimePicker extends AppCompatActivity implements View.OnClickLi
         bundle.putInt("weekday",num_of_weekday);
         fast_time_dialog.setArguments(bundle);
 
-
         fast_time_dialog.show(getSupportFragmentManager(),"date_input_dialog");
     }
 

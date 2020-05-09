@@ -26,7 +26,7 @@ public class SQLiteDataBaseHelper extends SQLiteOpenHelper {
         //創建資料表
          String table_novice = "CREATE TABLE IF NOT EXISTS " + USER_WEEK_PLAN + "( " +
                 "_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                "WEEKDAY INTEGER ," +
+                 "WEEKDAY INTEGER ," +
                  "STARTIME VARCHAR(50) ," +
                 "DURATION INTEGER " +
                 ");";
@@ -58,10 +58,11 @@ public class SQLiteDataBaseHelper extends SQLiteOpenHelper {
 
 
     //create PUT startTime method
-    public void putInWeekPlanTable(String startTime , int duration){
+    public void putInWeekPlanTable( int weekday, String startTime , int duration){
 
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         ContentValues values1 = new ContentValues();
+        values1.put("WEEKDAY",weekday);
         values1.put("STARTIME",startTime);
         values1.put("DURATION",duration);
         sqLiteDatabase.insert(USER_WEEK_PLAN,null,values1);

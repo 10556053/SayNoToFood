@@ -9,9 +9,11 @@ import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.firebase4.DataBase.SQLiteDataBaseHelper;
 import com.example.firebase4.Dialogs.Custom_AlertDialog;
+import com.example.firebase4.FirstTimeInput.FirstTimeWeightInput;
 import com.example.firebase4.R;
 import com.example.firebase4.WeekView.ShowWeekView;
 import com.facebook.stetho.Stetho;
@@ -56,41 +58,63 @@ public class FastEventScheduler extends AppCompatActivity implements View.OnClic
         switch (v.getId()){
 
             case R.id.cd_novice:
+                reset_Data();
+                putDataUserWeekPlan( 8 );
                 openAlertDialog(0);
-                //putDataNovice();
 
         }
         switch (v.getId()){
             case R.id.cd_experienced:
+                reset_Data();
+                putDataUserWeekPlan( 9 );
                 openAlertDialog(1);
                 //putDataAdvanced();
 
         }
         switch (v.getId()){
             case R.id.cd_advanced:
+                reset_Data();
+                putDataUserWeekPlan( 10 );
                 openAlertDialog(2);
                 //putDataHard();
 
         }
         switch (v.getId()){
             case R.id.cd_hardcore:
+                reset_Data();
+                putDataUserWeekPlan( 5 );
                 openAlertDialog(3);
                 //putDataHard();
 
         }
         switch (v.getId()){
             case R.id.cd_perfect:
+                reset_Data();
+                putDataUserWeekPlan( 4 );
                 openAlertDialog(4);
                 //putDataHard();
 
         }
         switch (v.getId()){
             case R.id.cd_incredible:
+                reset_Data();
+                putDataUserWeekPlan( 2 );
                 openAlertDialog(5);
                 //putDataHard();
 
         }
 
+    }
+
+    private void reset_Data() {
+        sqLiteDataBaseHelper = new SQLiteDataBaseHelper(FastEventScheduler.this);
+        db=sqLiteDataBaseHelper.getWritableDatabase();
+        db.execSQL("delete from user_week_plan" );
+        db.execSQL("UPDATE sqlite_sequence SET seq = 0 WHERE name = 'user_week_plan'");
+        db.execSQL("delete from user_fast_history" );
+        db.execSQL("UPDATE sqlite_sequence SET seq = 0 WHERE name = 'user_fast_history'");
+
+        Toast.makeText(FastEventScheduler.this , "資料已重置",  Toast.LENGTH_SHORT).show();
     }
 
     private void openAlertDialog(int fastType) {
@@ -104,7 +128,7 @@ public class FastEventScheduler extends AppCompatActivity implements View.OnClic
 
     }
 
-    public void putDataNovice(){
+    /*public void putData(){
         Calendar c = Calendar.getInstance();
         int year = c.get(Calendar.YEAR);
         int month = c.get(Calendar.MONTH);
@@ -141,69 +165,29 @@ public class FastEventScheduler extends AppCompatActivity implements View.OnClic
         bundle.putInt("schedule_type",1);
         i.putExtras(bundle);
         startActivity(i);
-    }
+    }*/
 
-    public void putDataAdvanced(){
-        Calendar c = Calendar.getInstance();
-        int year = c.get(Calendar.YEAR);
-        int month = c.get(Calendar.MONTH);
-        int day = c.get(Calendar.DAY_OF_MONTH);
-        int[] scheduler = {0,1,4,5,6};
+    public void putDataUserWeekPlan(int duration){
         sqLiteDataBaseHelper = new SQLiteDataBaseHelper(FastEventScheduler.this);
 
-        for (int i = 0;i<scheduler.length;i++){
+        for (int i = 1;i<8;i++){
             Calendar startTime = Calendar.getInstance();
-            int duration = 7;
 
-            SimpleDateFormat df = new  SimpleDateFormat("yyyy-MM-dd HH:mm ,EEEE");
-            startTime.set(Calendar.YEAR,year);
-            startTime.set(Calendar.MONTH,month);
-            startTime.set(Calendar.DAY_OF_MONTH,(day+scheduler[i]));
+
+            SimpleDateFormat df = new  SimpleDateFormat("HH:mm:ss");
+
             startTime.set(Calendar.HOUR_OF_DAY,12);
-            startTime.set(Calendar.MINUTE,0);
+            startTime.set(Calendar.MINUTE,30);
             startTime.set(Calendar.SECOND,0);
 
             String st_startTime = df.format(startTime.getTime());
-            //sqLiteDataBaseHelper.putInAdvancedTable(st_startTime,duration);
+            sqLiteDataBaseHelper.putInWeekPlanTable(i,st_startTime,duration);
         }
 
-        Intent i = new Intent(getApplicationContext(), ShowWeekView.class);
-        Bundle bundle = new Bundle();
-        bundle.putInt("schedule_type",2);
-        i.putExtras(bundle);
-        startActivity(i);
+
     }
 
-    public void putDataHard(){
-        Calendar c = Calendar.getInstance();
-        int year = c.get(Calendar.YEAR);
-        int month = c.get(Calendar.MONTH);
-        int day = c.get(Calendar.DAY_OF_MONTH);
-        int[] scheduler = {0,1,4,5,6};
-        sqLiteDataBaseHelper = new SQLiteDataBaseHelper(FastEventScheduler.this);
 
-        for (int i = 0;i<scheduler.length;i++){
-            Calendar startTime = Calendar.getInstance();
-            int duration = 6;
-
-            SimpleDateFormat df = new  SimpleDateFormat("yyyy-MM-dd HH:mm ,EEEE");
-            startTime.set(Calendar.YEAR,year);
-            startTime.set(Calendar.MONTH,month);
-            startTime.set(Calendar.DAY_OF_MONTH,(day+scheduler[i]));
-            startTime.set(Calendar.HOUR_OF_DAY,12);
-            startTime.set(Calendar.MINUTE,0);
-            startTime.set(Calendar.SECOND,0);
-
-            String st_startTime = df.format(startTime.getTime());
-            //sqLiteDataBaseHelper.putInHardTable(st_startTime,duration);
-        }
-
-        Intent i = new Intent(getApplicationContext(), ShowWeekView.class);
-        Bundle bundle = new Bundle();
-        bundle.putInt("schedule_type",3);
-        i.putExtras(bundle);
-        startActivity(i);
-    }
 
 
 }
