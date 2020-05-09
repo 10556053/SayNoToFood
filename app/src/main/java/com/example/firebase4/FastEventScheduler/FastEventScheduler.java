@@ -47,7 +47,7 @@ public class FastEventScheduler extends AppCompatActivity implements View.OnClic
         cd_hardcore.setOnClickListener(this);
         cd_perfect.setOnClickListener(this);
         cd_incredible.setOnClickListener(this);
-        Stetho.initializeWithDefaults(this);
+        //Stetho.initializeWithDefaults(this);
     }
 
     @Override

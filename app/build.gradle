@@ -29,6 +29,7 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
+    //fireBase dependencies
     implementation 'com.google.firebase:firebase-core:17.2.2'
     implementation 'com.google.firebase:firebase-analytics:17.2.2'
     implementation 'com.google.firebase:firebase-auth:19.2.0'
@@ -36,12 +37,23 @@ dependencies {
     implementation 'com.google.firebase:firebase-storage:19.1.1'
     implementation 'com.google.android.gms:play-services-auth:17.0.0'
 
-    implementation 'com.google.android.gms:play-services-auth:17.0.0'
+
+    //other outsources dependencies
     implementation 'com.android.support:multidex:1.0.3'
     implementation 'com.facebook.android:facebook-login:[5,6)'
     api 'com.theartofdev.edmodo:android-image-cropper:2.8.+'
     implementation 'com.squareup.picasso:picasso:2.71828'
     implementation 'com.github.alamkanak:android-week-view:1.2.6'
+
+    //buttonNavigation
+    implementation 'com.google.android.material:material:1.1.0'
+    implementation 'androidx.navigation:navigation-fragment:2.2.1'
+    implementation 'androidx.navigation:navigation-ui:2.2.1'
+
+    //stetho
     implementation 'com.facebook.stetho:stetho:1.5.1'
+    implementation("com.facebook.stetho:stetho-okhttp3:1.5.1") {
+        exclude group: 'com.facebook.stetho'
+    }
 
 }

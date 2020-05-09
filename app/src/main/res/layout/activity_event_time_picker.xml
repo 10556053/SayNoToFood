@@ -23,340 +23,347 @@
             android:text="設定每日進食區間"
             android:textSize="30sp" />
 
-        <ScrollView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="649dp">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-            <LinearLayout
+            <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_height="506dp">
 
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/cd_Mon"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="127dp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginRight="20dp"
-                    app:cardCornerRadius="15dp">
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
-                    <LinearLayout
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/cd_Mon"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal">
-
-                        <ImageView
-                            android:id="@+id/img_Mon"
-                            android:layout_width="74dp"
-                            android:layout_height="78dp"
-                            android:layout_margin="20dp"
-                            app:srcCompat="@drawable/mon" />
+                        android:layout_height="127dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginRight="20dp"
+                        app:cardCornerRadius="15dp">
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:orientation="vertical">
+                            android:orientation="horizontal">
 
-                            <TextView
-                                android:id="@+id/tv_Mon"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="20dp"
-                                android:text="星期一" />
+                            <ImageView
+                                android:id="@+id/img_Mon"
+                                android:layout_width="74dp"
+                                android:layout_height="78dp"
+                                android:layout_margin="20dp"
+                                app:srcCompat="@drawable/mon" />
 
-                            <TextView
-                                android:id="@+id/tv_showTime_Mon"
+                            <LinearLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="20dp" />
+                                android:layout_height="match_parent"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/tv_Mon"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="20dp"
+                                    android:text="星期一" />
+
+                                <TextView
+                                    android:id="@+id/tv_showTime_Mon"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="20dp" />
+                            </LinearLayout>
+
                         </LinearLayout>
 
-                    </LinearLayout>
+                    </androidx.cardview.widget.CardView>
 
-                </androidx.cardview.widget.CardView>
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/cd_Tue"
-                    android:layout_width="match_parent"
-                    android:layout_height="127dp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginRight="20dp"
-                    app:cardCornerRadius="15dp">
-
-                    <LinearLayout
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/cd_Tue"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal">
-
-                        <ImageView
-                            android:id="@+id/img_Tue"
-                            android:layout_width="74dp"
-                            android:layout_height="78dp"
-                            android:layout_margin="20dp"
-                            app:srcCompat="@drawable/tue" />
+                        android:layout_height="127dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginRight="20dp"
+                        app:cardCornerRadius="15dp">
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:orientation="vertical">
+                            android:orientation="horizontal">
 
-                            <TextView
-                                android:id="@+id/tv_Tue"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="20dp"
-                                android:text="星期二" />
+                            <ImageView
+                                android:id="@+id/img_Tue"
+                                android:layout_width="74dp"
+                                android:layout_height="78dp"
+                                android:layout_margin="20dp"
+                                app:srcCompat="@drawable/tue" />
 
-                            <TextView
-                                android:id="@+id/tv_showTime_Tue"
+                            <LinearLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="20dp" />
+                                android:layout_height="match_parent"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/tv_Tue"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="20dp"
+                                    android:text="星期二" />
+
+                                <TextView
+                                    android:id="@+id/tv_showTime_Tue"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="20dp" />
+                            </LinearLayout>
+
                         </LinearLayout>
 
-                    </LinearLayout>
+                    </androidx.cardview.widget.CardView>
 
-                </androidx.cardview.widget.CardView>
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/cd_Wed"
-                    android:layout_width="match_parent"
-                    android:layout_height="127dp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginRight="20dp"
-                    app:cardCornerRadius="15dp">
-
-                    <LinearLayout
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/cd_Wed"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal">
-
-                        <ImageView
-                            android:id="@+id/img_Wed"
-                            android:layout_width="74dp"
-                            android:layout_height="78dp"
-                            android:layout_margin="20dp"
-                            app:srcCompat="@drawable/wed" />
+                        android:layout_height="127dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginRight="20dp"
+                        app:cardCornerRadius="15dp">
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:orientation="vertical">
+                            android:orientation="horizontal">
 
-                            <TextView
-                                android:id="@+id/tv_Wed"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="20dp"
-                                android:text="星期三" />
+                            <ImageView
+                                android:id="@+id/img_Wed"
+                                android:layout_width="74dp"
+                                android:layout_height="78dp"
+                                android:layout_margin="20dp"
+                                app:srcCompat="@drawable/wed" />
 
-                            <TextView
-                                android:id="@+id/tv_showTime_Wed"
+                            <LinearLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="10dp" />
+                                android:layout_height="match_parent"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/tv_Wed"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="20dp"
+                                    android:text="星期三" />
+
+                                <TextView
+                                    android:id="@+id/tv_showTime_Wed"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="10dp" />
+                            </LinearLayout>
+
                         </LinearLayout>
 
-                    </LinearLayout>
+                    </androidx.cardview.widget.CardView>
 
-                </androidx.cardview.widget.CardView>
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/cd_Thu"
-                    android:layout_width="match_parent"
-                    android:layout_height="127dp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginRight="20dp"
-                    app:cardCornerRadius="15dp">
-
-                    <LinearLayout
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/cd_Thu"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal">
-
-                        <ImageView
-                            android:id="@+id/img_Thu"
-                            android:layout_width="74dp"
-                            android:layout_height="78dp"
-                            android:layout_margin="20dp"
-                            app:srcCompat="@drawable/thu" />
+                        android:layout_height="127dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginRight="20dp"
+                        app:cardCornerRadius="15dp">
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:orientation="vertical">
+                            android:orientation="horizontal">
 
-                            <TextView
-                                android:id="@+id/tv_Thu"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="20dp"
-                                android:text="星期四" />
+                            <ImageView
+                                android:id="@+id/img_Thu"
+                                android:layout_width="74dp"
+                                android:layout_height="78dp"
+                                android:layout_margin="20dp"
+                                app:srcCompat="@drawable/thu" />
 
-                            <TextView
-                                android:id="@+id/tv_showTime_Thu"
+                            <LinearLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="10dp" />
+                                android:layout_height="match_parent"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/tv_Thu"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="20dp"
+                                    android:text="星期四" />
+
+                                <TextView
+                                    android:id="@+id/tv_showTime_Thu"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="10dp" />
+                            </LinearLayout>
+
                         </LinearLayout>
 
-                    </LinearLayout>
+                    </androidx.cardview.widget.CardView>
 
-                </androidx.cardview.widget.CardView>
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/cd_Fri"
-                    android:layout_width="match_parent"
-                    android:layout_height="127dp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginRight="20dp"
-                    app:cardCornerRadius="15dp">
-
-                    <LinearLayout
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/cd_Fri"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal">
-
-                        <ImageView
-                            android:id="@+id/img_Fri"
-                            android:layout_width="74dp"
-                            android:layout_height="78dp"
-                            android:layout_margin="20dp"
-                            app:srcCompat="@drawable/fri" />
+                        android:layout_height="127dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginRight="20dp"
+                        app:cardCornerRadius="15dp">
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:orientation="vertical">
+                            android:orientation="horizontal">
 
-                            <TextView
-                                android:id="@+id/tv_Fri"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="20dp"
-                                android:text="星期五" />
+                            <ImageView
+                                android:id="@+id/img_Fri"
+                                android:layout_width="74dp"
+                                android:layout_height="78dp"
+                                android:layout_margin="20dp"
+                                app:srcCompat="@drawable/fri" />
 
-                            <TextView
-                                android:id="@+id/tv_showTime_Fri"
+                            <LinearLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="10dp" />
+                                android:layout_height="match_parent"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/tv_Fri"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="20dp"
+                                    android:text="星期五" />
+
+                                <TextView
+                                    android:id="@+id/tv_showTime_Fri"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="10dp" />
+                            </LinearLayout>
+
                         </LinearLayout>
 
-                    </LinearLayout>
+                    </androidx.cardview.widget.CardView>
 
-                </androidx.cardview.widget.CardView>
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/cd_Sat"
-                    android:layout_width="match_parent"
-                    android:layout_height="127dp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginRight="20dp"
-                    app:cardCornerRadius="15dp">
-
-                    <LinearLayout
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/cd_Sat"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal">
-
-                        <ImageView
-                            android:id="@+id/img_Sat"
-                            android:layout_width="74dp"
-                            android:layout_height="78dp"
-                            android:layout_margin="20dp"
-                            app:srcCompat="@drawable/sat" />
+                        android:layout_height="127dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginRight="20dp"
+                        app:cardCornerRadius="15dp">
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:orientation="vertical">
+                            android:orientation="horizontal">
 
-                            <TextView
-                                android:id="@+id/tv_Sat"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="20dp"
-                                android:text="星期六" />
+                            <ImageView
+                                android:id="@+id/img_Sat"
+                                android:layout_width="74dp"
+                                android:layout_height="78dp"
+                                android:layout_margin="20dp"
+                                app:srcCompat="@drawable/sat" />
 
-                            <TextView
-                                android:id="@+id/tv_showTime_Sat"
+                            <LinearLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="10dp" />
+                                android:layout_height="match_parent"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/tv_Sat"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="20dp"
+                                    android:text="星期六" />
+
+                                <TextView
+                                    android:id="@+id/tv_showTime_Sat"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="10dp" />
+                            </LinearLayout>
+
                         </LinearLayout>
 
-                    </LinearLayout>
+                    </androidx.cardview.widget.CardView>
 
-                </androidx.cardview.widget.CardView>
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/cd_Sun"
-                    android:layout_width="match_parent"
-                    android:layout_height="127dp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginRight="20dp"
-                    app:cardCornerRadius="15dp">
-
-                    <LinearLayout
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/cd_Sun"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal">
-
-                        <ImageView
-                            android:id="@+id/img_Sun"
-                            android:layout_width="74dp"
-                            android:layout_height="78dp"
-                            android:layout_margin="20dp"
-                            app:srcCompat="@drawable/sun" />
+                        android:layout_height="127dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginRight="20dp"
+                        app:cardCornerRadius="15dp">
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:orientation="vertical">
+                            android:orientation="horizontal">
 
-                            <TextView
-                                android:id="@+id/tv_Sun"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="20dp"
-                                android:text="星期天" />
+                            <ImageView
+                                android:id="@+id/img_Sun"
+                                android:layout_width="74dp"
+                                android:layout_height="78dp"
+                                android:layout_margin="20dp"
+                                app:srcCompat="@drawable/sun" />
 
-                            <TextView
-                                android:id="@+id/tv_showTime_Sun"
+                            <LinearLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="10dp" />
+                                android:layout_height="match_parent"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/tv_Sun"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="20dp"
+                                    android:text="星期天" />
+
+                                <TextView
+                                    android:id="@+id/tv_showTime_Sun"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="10dp" />
+                            </LinearLayout>
+
                         </LinearLayout>
 
-                    </LinearLayout>
+                    </androidx.cardview.widget.CardView>
 
-                </androidx.cardview.widget.CardView>
+                </LinearLayout>
 
-            </LinearLayout>
+            </ScrollView>
 
-        </ScrollView>
+            <Button
+                android:id="@+id/bt_finished"
+                android:layout_width="wrap_content"
+                android:layout_height="54dp"
+                android:layout_gravity="center|right|center_horizontal"
+                android:layout_marginTop="30dp"
+                android:layout_marginRight="30dp"
+                android:background="@drawable/alert_button"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:text="現在就開始吧!">
 
-        <Button
-            android:id="@+id/bt_finished"
-            android:layout_width="wrap_content"
-            android:layout_height="54dp"
-            android:layout_gravity="center|right|center_horizontal"
-            android:layout_marginTop="30dp"
-            android:layout_marginRight="30dp"
-            android:background="@drawable/alert_button"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
-            android:text="aight bitches lets get shit done">
+            </Button>
+        </LinearLayout>
 
-        </Button>
     </LinearLayout>
 
 

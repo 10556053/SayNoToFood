@@ -11,7 +11,9 @@ import android.widget.TextView;
 
 import com.example.firebase4.Dialogs.Custom_AlertDialog;
 import com.example.firebase4.Dialogs.Fast_Time_Scheduler_Dialog;
+import com.example.firebase4.FirstTimeInput.FirstTimeWeightInput;
 import com.example.firebase4.R;
+import com.example.firebase4.TestActivity;
 
 public class EventTimePicker extends AppCompatActivity implements View.OnClickListener , Fast_Time_Scheduler_Dialog.FasTimeInputDialogListener {
     private CardView cd_Mon,cd_Tue,cd_Wed,cd_Thu,cd_Fri,cd_Sat,cd_Sun;
@@ -46,6 +48,13 @@ public class EventTimePicker extends AppCompatActivity implements View.OnClickLi
         cd_Fri.setOnClickListener(this);
         cd_Sat.setOnClickListener(this);
         cd_Sun.setOnClickListener(this);
+
+        bt_finished.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), TestActivity.class));
+            }
+        });
 
     }
 
