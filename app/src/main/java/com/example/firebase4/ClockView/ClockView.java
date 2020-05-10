@@ -54,10 +54,10 @@ public class ClockView extends View {
     private void init() {
         mPaint = new Paint();
         mPaint.setStrokeWidth(dp2px(2));
-//        mPaint.setColor(Color.RED);
-//        mPaint.setAntiAlias(true);
-//        mPaint.setTextAlign(Paint.Align.CENTER);
-//        mPaint.setStrokeCap(Paint.Cap.ROUND);
+        mPaint.setColor(Color.RED);
+        mPaint.setAntiAlias(true);
+        mPaint.setTextAlign(Paint.Align.CENTER);
+        mPaint.setStrokeCap(Paint.Cap.ROUND);
         mCalendar = Calendar.getInstance();
         mHandler.sendEmptyMessage(0);
     }

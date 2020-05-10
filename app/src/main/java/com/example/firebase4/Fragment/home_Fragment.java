@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -22,6 +23,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.firebase4.ClockView.ClockView;
 import com.example.firebase4.DataBase.SQLiteDataBaseHelper;
+import com.example.firebase4.MainActivity;
 import com.example.firebase4.R;
 import com.example.firebase4.TestActivity;
 
@@ -56,9 +58,9 @@ public class home_Fragment extends Fragment {
         Context context = fragment_home.getContext();
         sqLiteDataBaseHelper = new SQLiteDataBaseHelper(context);
         db = sqLiteDataBaseHelper.getReadableDatabase();
+
+
         freeDraw = new ClockView(home_Fragment.super.getContext());
-
-
         init(fragment_home);
 
         //取得今天星期
@@ -97,8 +99,15 @@ public class home_Fragment extends Fragment {
             //drawExt是第二個傳入值
             int startHour = start.get(Calendar.HOUR_OF_DAY);
             int startMin = start.get(Calendar.MINUTE);
+            //h,m為開始時數，分鐘;h2,m2為結束時數，分鐘
+
+            h= startHour;
+            m=startMin;
             int endHour = end.get(Calendar.HOUR_OF_DAY);
             int endMin = end.get(Calendar.MINUTE);
+            //
+            h2 = endHour;
+            m2 = endMin;
 
             freeDraw.drawExt2(startHour,startMin);
             freeDraw.drawExt(endHour,endMin);
@@ -176,16 +185,25 @@ public class home_Fragment extends Fragment {
             //获取当前时间
             int second = mCalendar.get(Calendar.SECOND);
             int minute = mCalendar.get(Calendar.MINUTE);
-            int hour = mCalendar.get(Calendar.HOUR);
+            int hour = mCalendar.get(Calendar.HOUR_OF_DAY);
+            //當前時間
+            int compare = hour * 60 * 60 + minute * 60 + second;
+
             long between = 0;
+            //開始時間的秒數
             int show = h * 60 * 60 + m * 60;
+            //結束時間的秒數
             int show2 = h2 * 60 * 60 + m2 * 60;
-            if (hour * 60 * 60 + minute * 60 + second >= show && hour * 60 * 60 + minute * 60 + second <= show2) {
+
+            String st = String.format("show = %d compare =%d  show2 = %d",show,compare,show2);
+            Toast.makeText(getContext(), st, Toast.LENGTH_SHORT).show();
+
+            if (compare >= show && compare <= show2) {
                 timeText.setVisibility(View.VISIBLE);
                 timeText2.setVisibility(View.VISIBLE);
                 timeText.setText("目前為斷食時段");
                 timeText.setTextColor(Color.RED);
-
+                //bt_eatWtf.setVisibility(View.INVISIBLE);
                 between = (h2 * 60 * 60 + m2 * 60) - (hour * 60 * 60 + minute * 60 + second);
                 long nh = 60 * 60;
                 long nm = 60;
@@ -200,7 +218,15 @@ public class home_Fragment extends Fragment {
             } else {
                 timeText.setVisibility(View.INVISIBLE);
                 timeText2.setVisibility(View.INVISIBLE);
-
+                //bt_eatWtf.setVisibility(View.VISIBLE);
+                /*bt_eatWtf.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent();
+                        intent.setClass(HomeFragment.super.getContext(), foodClassification.class);
+                        startActivity(intent);
+                    }
+                });*/
             }
         }
     };
