@@ -20,4 +20,7 @@
     <color name="dark_green02">#1D4B00</color>
     <color name="light_green">#5CBB19</color>
     <color name="light_green02">#B3E095</color>
+
+    <color name="colorNavIcon">#dae9f6</color>
+    <color name="colorNavText">#01294b</color>
 </resources>

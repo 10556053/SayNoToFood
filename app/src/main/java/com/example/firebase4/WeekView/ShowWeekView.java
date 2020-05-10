@@ -15,7 +15,6 @@ import com.alamkanak.weekview.MonthLoader;
 import com.alamkanak.weekview.WeekView;
 import com.alamkanak.weekview.WeekViewEvent;
 import com.example.firebase4.DataBase.SQLiteDataBaseHelper;
-import com.example.firebase4.HomePageActivity;
 import com.example.firebase4.R;
 
 import java.text.ParseException;
@@ -189,8 +188,8 @@ public class ShowWeekView extends AppCompatActivity implements MonthLoader.Month
                 mWeekView.goToToday();
                 return true;
             case R.id.action_next:
-                Intent i = new Intent(ShowWeekView.this, HomePageActivity.class);
-                startActivity(i);
+                //Intent i = new Intent(ShowWeekView.this, HomePageActivity.class);
+                //startActivity(i);
         }
 
         return super.onOptionsItemSelected(item);

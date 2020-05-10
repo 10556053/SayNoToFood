@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.example.firebase4.Dialogs.Custom_AlertDialog;
 import com.example.firebase4.Dialogs.Fast_Time_Scheduler_Dialog;
 import com.example.firebase4.FirstTimeInput.FirstTimeWeightInput;
+import com.example.firebase4.HomePage;
 import com.example.firebase4.R;
 import com.example.firebase4.TestActivity;
 
@@ -52,7 +53,7 @@ public class EventTimePicker extends AppCompatActivity implements View.OnClickLi
         bt_finished.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), TestActivity.class));
+                startActivity(new Intent(getApplicationContext(), HomePage.class));
             }
         });
 

@@ -10,6 +10,8 @@ import android.widget.TextView;
 import com.example.firebase4.DataBase.SQLiteDataBaseHelper;
 import com.example.firebase4.FastEventScheduler.FastEventScheduler;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -44,10 +46,18 @@ public class TestActivity extends AppCompatActivity {
             int weekday = c.getInt(1);
             String startime = c.getString(2);
             int duration = c.getInt(3);
-
-            Calendar c1 = Calendar.getInstance();
-
-            tv_showFetchedTime.setText(startime);
+            Calendar start = Calendar.getInstance();
+            SimpleDateFormat df = new  SimpleDateFormat("HH:mm:ss");
+            try {
+                start.setTime(df.parse(startime));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            Calendar c1 = (Calendar) start.clone();
+            c1.add(Calendar.HOUR_OF_DAY,duration);
+            String endtime = df.format(c1.getTime());
+            String s = String.format("開始時間為 %s,結束時間為%s ",startime,endtime);
+            tv_showFetchedTime.setText(s);
 
         }
 
