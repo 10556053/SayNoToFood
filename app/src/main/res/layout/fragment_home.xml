@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <LinearLayout
@@ -9,9 +11,51 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/textView5"
+            android:id="@+id/tv_showtime"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="home_fragment" />
+            android:text="功能實作從fragment_home" />
+
+        <ImageView
+            android:id="@+id/iv_apm"
+            android:layout_width="36dp"
+            android:layout_height="26dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="30dp"
+            app:srcCompat="@drawable/sun_icon" />
+
+        <com.example.firebase4.ClockView.ClockView
+            android:id="@+id/freeDraw"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_horizontal"
+            android:format12Hour="h:mm" />
+
+
+        <TextView
+            android:id="@+id/timeText"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_below="@+id/freeDraw"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:textSize="50dp"
+            android:visibility="invisible" />
+        <TextView
+            android:id="@+id/timeText2"
+            android:layout_width="300dp"
+            android:layout_height="60dp"
+            android:layout_below="@+id/timeText"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:textSize="30dp"
+            />
+
+
+
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

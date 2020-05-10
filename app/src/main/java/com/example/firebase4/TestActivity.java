@@ -16,8 +16,9 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class TestActivity extends AppCompatActivity {
-    public static final String USER_WEEK_PLAN="user_week_plan";
+
     private TextView tv_showFetchedTime;
+    public static final String USER_WEEK_PLAN="user_week_plan";
     public SQLiteDatabase db;
     public SQLiteDataBaseHelper sqLiteDataBaseHelper;
     @Override
