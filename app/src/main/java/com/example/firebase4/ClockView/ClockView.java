@@ -12,6 +12,8 @@ import android.view.View;
 
 import androidx.annotation.Nullable;
 
+import com.example.firebase4.R;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -21,7 +23,7 @@ public class ClockView extends View {
     private static int time=0,time2=time;
     private int mHeight;
     private int mWidth;
-    private Paint mPaint;
+    private Paint mPaint ,mPaint2;
     private int borderPadding = 10; //外边框距离父view的padding
     private Context mContext;
     private int textPadding = 42; //刻度数字距离边框的距离
@@ -53,8 +55,8 @@ public class ClockView extends View {
 
     private void init() {
         mPaint = new Paint();
+        mPaint.setColor(Color.rgb(112, 218, 255));
         mPaint.setStrokeWidth(dp2px(2));
-        mPaint.setColor(Color.RED);
         mPaint.setAntiAlias(true);
         mPaint.setTextAlign(Paint.Align.CENTER);
         mPaint.setStrokeCap(Paint.Cap.ROUND);
@@ -67,13 +69,17 @@ public class ClockView extends View {
         super.onDraw(canvas);
         mHeight = getMeasuredHeight();
         mWidth = getMeasuredWidth();
+
+
+        //圖層:最先畫的放最下面
         // 绘制圆弧
         if (drawExtFlag)  // 當來自主要AndDrawingActivity之按鈕"始繪"動作
         {
-            mPaint.setColor(Color.rgb(153, 187, 255));
+            mPaint.setColor(Color.rgb(112, 218, 255));
             RectF rectF = new RectF(dp2px(borderPadding)*2,dp2px(borderPadding)*2,mWidth-dp2px(borderPadding)*2,mHeight-dp2px(borderPadding)*2);
+            //因為扇形以90度當0度，所以要先剪去90
             canvas.drawArc(rectF,time2-90,time-time2,true,mPaint);
-
+            //canvas.drawArc(rectF,time2-90,time-time2,true,mPaint);
         }
 
         mPaint.setStrokeWidth(dp2px(7));
@@ -81,10 +87,7 @@ public class ClockView extends View {
         mPaint.setTextAlign(Paint.Align.CENTER);
         mPaint.setStrokeCap(Paint.Cap.ROUND);
         mPaint.setStyle(Paint.Style.STROKE);
-        mPaint.setColor(Color.rgb(214, 214, 194));
-
-
-
+        mPaint.setColor(Color.rgb(160, 160, 160));
         //绘制外环
         canvas.drawCircle(mWidth / 2, mHeight / 2, mHeight / 2 - dp2px(borderPadding), mPaint);
 
@@ -122,8 +125,6 @@ public class ClockView extends View {
         int second = mCalendar.get(Calendar.SECOND);
         int minute = mCalendar.get(Calendar.MINUTE);
         int hour = mCalendar.get(Calendar.HOUR);
-
-
         //绘制秒针
         mPaint.setStrokeWidth(dp2px(1));
         mPaint.setColor(Color.RED);
@@ -164,21 +165,24 @@ public class ClockView extends View {
         return DensityUtil.dip2px(mContext, dp);
     }
 
+    //set end hour angle
     public void drawExt(int h,int m)
     {
         // 主程式利用 freeDraw.drawExt();
         // 令始繪動作觸發 drawExtFalg = true; 並強迫畫布重畫 => invalidate()
         // onDraw()之繪圖方法設立判斷式用以捕捉目前被觸發之方法
-        time = (int) ((h + (float)m / 60) * 360 / 12);
+        time = (int) ((h + (float)m / 60) * 30);//(h + (float)m / 60) = x小時 ， 一個小時30度
         drawExtFlag = true;
         invalidate();
     }
+
+    //set start hour angle
     public void drawExt2(int h,int m)
     {
         // 主程式利用 freeDraw.drawExt();
         // 令始繪動作觸發 drawExtFalg = true; 並強迫畫布重畫 => invalidate()
         // onDraw()之繪圖方法設立判斷式用以捕捉目前被觸發之方法
-        time2 = (int) ((h + (float)m / 60) * 360 / 12);
+        time2 = (int) ((h + (float)m / 60) * 30);
         drawExtFlag = true;
         invalidate();
     }

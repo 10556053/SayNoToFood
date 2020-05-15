@@ -26,6 +26,7 @@ import com.example.firebase4.DataBase.SQLiteDataBaseHelper;
 import com.example.firebase4.MainActivity;
 import com.example.firebase4.R;
 import com.example.firebase4.TestActivity;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -41,6 +42,8 @@ public class home_Fragment extends Fragment {
     private int h,m,h2,m2;
     private ClockView freeDraw;
     private Handler handler = new Handler();
+
+
 
 
 
@@ -60,7 +63,9 @@ public class home_Fragment extends Fragment {
         db = sqLiteDataBaseHelper.getReadableDatabase();
 
 
+
         freeDraw = new ClockView(home_Fragment.super.getContext());
+
         init(fragment_home);
 
         //取得今天星期
@@ -115,6 +120,7 @@ public class home_Fragment extends Fragment {
 
         }
 
+
         tv_showtime.setText(s2);
 
         handler.removeCallbacks(updateTimer);//設定定時要執行的方法
@@ -129,6 +135,7 @@ public class home_Fragment extends Fragment {
         timeText=fragment_home.findViewById(R.id.timeText);
         timeText2 = fragment_home.findViewById(R.id.timeText2);
         freeDraw = fragment_home.findViewById(R.id.freeDraw);
+
     }
 
     @SuppressLint("SetTextI18n")
@@ -144,42 +151,12 @@ public class home_Fragment extends Fragment {
             final Calendar mCalendar = Calendar.getInstance();
             mCalendar.setTimeInMillis(time);
             int apm = mCalendar.get(Calendar.AM_PM);
-
-            if (apm == 0) {
+            if(apm == 0){
                 iv_apm.setImageResource(R.drawable.sun_icon);
-            } else {
+            }else {
                 iv_apm.setImageResource(R.drawable.moon);
             }
-            Calendar mCal = Calendar.getInstance();
-            CharSequence s = DateFormat.format("MM月.dd", mCal.getTime());
-            //tv_date.setText(s);
-            Calendar calendar = Calendar.getInstance();
-            int day = calendar.get(Calendar.DAY_OF_WEEK);
-            String week = null;
-            switch (day) {
-                case Calendar.SUNDAY:
-                    week = "日";
-                    break;
-                case Calendar.MONDAY:
-                    week = "一";
-                    break;
-                case Calendar.TUESDAY:
-                    week = "二";
-                    break;
-                case Calendar.THURSDAY:
-                    week = "三";
-                    break;
-                case Calendar.WEDNESDAY:
-                    week = "四";
-                    break;
-                case Calendar.FRIDAY:
-                    week = "五";
-                    break;
-                case Calendar.SATURDAY:
-                    week = "六";
-                    break;
-            }
-            //tv_week.setText("\t星期" + week);
+
 
 
             //获取当前时间
@@ -187,25 +164,27 @@ public class home_Fragment extends Fragment {
             int minute = mCalendar.get(Calendar.MINUTE);
             int hour = mCalendar.get(Calendar.HOUR_OF_DAY);
             //當前時間
-            int compare = hour * 60 * 60 + minute * 60 + second;
+            int current = hour * 60 * 60 + minute * 60 + second;
 
             long between = 0;
             //開始時間的秒數
-            int show = h * 60 * 60 + m * 60;
+            int startsec = h * 60 * 60 + m * 60;
             //結束時間的秒數
-            int show2 = h2 * 60 * 60 + m2 * 60;
+            int endsec = h2 * 60 * 60 + m2 * 60;
 
-            String st = String.format("show = %d compare =%d  show2 = %d",show,compare,show2);
-            Toast.makeText(getContext(), st, Toast.LENGTH_SHORT).show();
 
-            if (compare >= show && compare <= show2) {
+            //在當下時間大於進食開始時間，並小於進食結束時間才跑
+            if (current >= startsec && current <= endsec) {
                 timeText.setVisibility(View.VISIBLE);
                 timeText2.setVisibility(View.VISIBLE);
-                timeText.setText("目前為斷食時段");
+                timeText.setText("目前為進食時段，你吃飯了嗎?");
                 timeText.setTextColor(Color.RED);
                 //bt_eatWtf.setVisibility(View.INVISIBLE);
-                between = (h2 * 60 * 60 + m2 * 60) - (hour * 60 * 60 + minute * 60 + second);
+                //結束時間減去當前時間
+                between = endsec - current;
+                //小時的秒數
                 long nh = 60 * 60;
+                //分鐘的秒數
                 long nm = 60;
                 // 计算差多少小时
                 long between_hour = between / nh;
@@ -215,18 +194,53 @@ public class home_Fragment extends Fragment {
                 long between_sec = between % nh % nm;
                 String strBetween = String.format("%02d", between_hour) + ":" + String.format("%02d", between_min) + ":" + String.format("%02d", between_sec);
                 timeText2.setText(strBetween);
-            } else {
-                timeText.setVisibility(View.INVISIBLE);
-                timeText2.setVisibility(View.INVISIBLE);
-                //bt_eatWtf.setVisibility(View.VISIBLE);
-                /*bt_eatWtf.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent();
-                        intent.setClass(HomeFragment.super.getContext(), foodClassification.class);
-                        startActivity(intent);
-                    }
-                });*/
+            }
+            //進食時程尚未開始
+            else if (startsec>current) {
+                /*String toast = String.format("startime = %d , now = %d",startsec,current);
+                Toast.makeText(getContext().getApplicationContext(), toast,
+                        Toast.LENGTH_SHORT).show();*/
+                timeText.setVisibility(View.VISIBLE);
+                timeText.setText("目前為斷食時段，距離進食開始還有:");
+                //距離開始的秒數= 開始的秒數-現在的秒數
+                int before_start = Math.abs(startsec - current);
+                //小時的秒數
+                long nh = 60 * 60;
+                //分鐘的秒數
+                long nm = 60;
+                // 计算差多少小时
+                long between_hour = before_start / nh;
+                // 计算差多少分钟
+                long between_min = before_start % nh / nm;
+                // 计算差多少秒//输出结果
+                long between_sec = before_start % nh % nm;
+                String strBetween2 = String.format("%02d", between_hour) + ":" + String.format("%02d", between_min) + ":" + String.format("%02d", between_sec);
+                timeText2.setText(strBetween2);
+
+
+            }
+            //進食食時程結束，計算今日結束倒數
+            else if (current>endsec){
+                timeText.setVisibility(View.VISIBLE);
+                timeText.setText("進食行程結束，目前為斷食時段，距離今日結束還有:");
+                int dayend = 24*60*60;
+                String toast = String.format("endday = %d , now = %d",dayend,current);
+                Toast.makeText(getContext().getApplicationContext(), toast,
+                        Toast.LENGTH_SHORT).show();
+                //距離今日結束的時間 =今日結束時間-現在時間
+                int before_end = dayend - current;
+                //小時的秒數
+                long nh = 60 * 60;
+                //分鐘的秒數
+                long nm = 60;
+                // 计算差多少小时
+                long between_hour = before_end / nh;
+                // 计算差多少分钟
+                long between_min = before_end % nh / nm;
+                // 计算差多少秒//输出结果
+                long between_sec = before_end % nh % nm;
+                String strBetween3 = String.format("%02d", between_hour) + ":" + String.format("%02d", between_min) + ":" + String.format("%02d", between_sec);
+                timeText2.setText(strBetween3);
             }
         }
     };

@@ -14,6 +14,8 @@ import android.widget.NumberPicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 import com.example.firebase4.DataBase.SQLiteDataBaseHelper;
 import com.example.firebase4.Dialogs.HeightInputDialog;
 import com.example.firebase4.Dialogs.SexInputDialog;
@@ -24,6 +26,9 @@ import com.example.firebase4.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.Dictionary;
+import java.util.Hashtable;
+
 public class FirstTimeWeightInput extends AppCompatActivity implements View.OnClickListener, SexInputDialog.SexInputDialogListener, WeightInputDialog.WeightInputDialogListener , HeightInputDialog.HeightInputDialogListener, TargetWeightInputDialog.TargetWeightInputDialogListener {
     private CardView cd_gender,cd_height,cd_weight,cd_target_weight;
     private TextView tv_show_gender,tv_show_height,tv_show_weight,tv_show_target_weight;
@@ -31,9 +36,7 @@ public class FirstTimeWeightInput extends AppCompatActivity implements View.OnCl
     private Button bt_next;
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
-    String UserId;
-    public SQLiteDatabase db;
-    public SQLiteDataBaseHelper sqLiteDataBaseHelper;
+    private boolean[] check = {false,false,false,false};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,39 +66,75 @@ public class FirstTimeWeightInput extends AppCompatActivity implements View.OnCl
         bt_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                Intent i = new Intent(getApplicationContext(), FastEventScheduler.class);
-                startActivity(i);
+                if(checkInput()==true){
+                    Intent i = new Intent(getApplicationContext(), FastEventScheduler.class);
+                    startActivity(i);
+                }
             }
         });
 
 
     }
 
+    private boolean checkInput() {
+        boolean token =true;
+        for (int i=0;i<check.length;i++){
+            if (check[i]==false){
+                animatedAlert(i);
+                token = false;
+            }
+        }
+        return  token;
+
+    }
+
+    private void animatedAlert(int i) {
+        switch (i){
+            case 0:
+                YoYo.with(Techniques.RubberBand)
+                        .duration(700)
+                        .repeat(1)
+                        .playOn(cd_gender);
+                break;
+            case 1:
+                YoYo.with(Techniques.RubberBand)
+                        .duration(700)
+                        .repeat(1)
+                        .playOn(cd_height);
+                break;
+            case 2:
+                YoYo.with(Techniques.RubberBand)
+                        .duration(700)
+                        .repeat(1)
+                        .playOn(cd_weight);
+                break;
+            case 3:
+                YoYo.with(Techniques.RubberBand)
+                        .duration(700)
+                        .repeat(1)
+                        .playOn(cd_target_weight);
+                break;
+        }
+    }
+
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onClick(View v) {
-        Intent i;
+
         switch (v.getId()){
             case R.id.cd_gender:
-                //show();
                 showSex();
-                //startActivity(i);
                 break;
 
             case R.id.cd_height:
-                //i = new Intent(getApplicationContext(),FirstTimeActivity2.class);
-                //startActivity(i);
                 showHeight();
                 break;
 
             case R.id.cd_weight:
                 showWeight();
-                //startActivity(i);
                 break;
             case R.id.cd_target_weight:
                 show_Target_Weight();
-                //startActivity(i);
                 break;
         }
     }
@@ -103,16 +142,19 @@ public class FirstTimeWeightInput extends AppCompatActivity implements View.OnCl
     private void showSex() {
         SexInputDialog sexInputDialog = new SexInputDialog();
         sexInputDialog.show(getSupportFragmentManager(),"sex_input_dialog");
+
     }
 
     private void showHeight() {
         HeightInputDialog heightInputDialog = new HeightInputDialog();
         heightInputDialog.show(getSupportFragmentManager(),"height_input_dialog");
+
     }
 
     private void show_Target_Weight() {
         TargetWeightInputDialog targetWeightInputDialog = new TargetWeightInputDialog();
         targetWeightInputDialog.show(getSupportFragmentManager(),"target_weight_input_dialog");
+
     }
 
 
@@ -126,20 +168,24 @@ public class FirstTimeWeightInput extends AppCompatActivity implements View.OnCl
     @Override
     public void applyWeight(String weight) {
         tv_show_weight.setText(weight+"公斤");
+        check[2]=true;
     }
 
     @Override
     public void applyHeight(String height) {
         tv_show_height.setText(height+"公分");
+        check[1]=true;
     }
 
     @Override
     public void applyTargetWeight(String target_weight) {
         tv_show_target_weight.setText(target_weight+"公斤");
+        check[3]=true;
     }
 
     @Override
     public void applySex(String sex) {
         tv_show_gender.setText(sex);
+        check[0]=true;
     }
 }

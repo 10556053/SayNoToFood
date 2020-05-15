@@ -20,12 +20,12 @@
             android:name=".WeekView.ShowWeekView"
             android:theme="@style/AppTheme2" />
         <activity android:name=".FirstTimeInput.TutorialVideo" />
-        <activity android:name=".MainActivity" />
+        <activity android:name=".FirstTimeInput.WelcomeActivity" />
         <activity android:name=".FastEventScheduler.FastEventScheduler" />
         <activity android:name=".FirstTimeInput.FirstTimeWeightInput" />
         <activity android:name=".userPage.userPage" />
         <activity android:name=".register" />
-        <activity android:name=".FirstTimeInput.WelcomeActivity">
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -56,4 +56,8 @@ dependencies {
         exclude group: 'com.facebook.stetho'
     }
 
+
+    //daimajia android view animation
+    implementation 'com.daimajia.easing:library:2.0@aar'
+    implementation 'com.daimajia.androidanimations:library:2.3@aar'
 }

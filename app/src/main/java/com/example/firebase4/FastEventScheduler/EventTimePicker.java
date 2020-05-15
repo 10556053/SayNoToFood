@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -50,10 +51,19 @@ public class EventTimePicker extends AppCompatActivity implements View.OnClickLi
         cd_Sat.setOnClickListener(this);
         cd_Sun.setOnClickListener(this);
 
+
+
         bt_finished.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                //完成所有初次輸入
                 startActivity(new Intent(getApplicationContext(), HomePage.class));
+                SharedPreferences sharedPreferences = getSharedPreferences("checkFirstTimeInfoComplete",MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                //將檢查字改為yes
+                editor.putString("checked","yes");
+                editor.apply();
             }
         });
 

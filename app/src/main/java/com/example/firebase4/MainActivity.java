@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.firebase4.FirstTimeInput.FirstTimeWeightInput;
+import com.example.firebase4.FirstTimeInput.WelcomeActivity;
 import com.example.firebase4.userPage.userPage;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
@@ -60,13 +62,17 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
     private FirebaseFirestore fStore;
     private FirebaseAuth fAuth;
+    private FirebaseAuth.AuthStateListener fAuthStateListener;
     private GoogleSignInClient mGoogleSignInClientl;
 
     private LoginManager loginManager;
     private CallbackManager mCallbackManager;
     private AccessToken accessToken;
+    private String isFiestTime = "true";
+
 
 
 
@@ -90,14 +96,27 @@ public class MainActivity extends AppCompatActivity {
         mCallbackManager = CallbackManager.Factory.create();
         loginManager = LoginManager.getInstance();
 
+        //先檢查是否撥放introduction
+        checkFirstTime();
+        fAuthStateListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                //若使用者狀態是以登入
+                if (firebaseAuth.getCurrentUser()!=null){
+                    //檢查是否完成基本身體數值
+                    if (checkBodyInfoComplete()==true){
+                        //若是，則送往主頁
+                        Intent intent = new Intent(MainActivity.this, HomePage.class);
+                        startActivity(intent);
+                    }else {
+                        //若否，則送往填寫
+                        Intent intent = new Intent(MainActivity.this, FirstTimeWeightInput.class);
+                        startActivity(intent);
+                    }
 
-        /*if (accessToken!= null){
-            //使用者為登出
-            loginManager.logOut();
-        }else{
-            //使用者以登出
-            Toast.makeText(MainActivity.this, "以登出", Toast.LENGTH_SHORT).show();
-        }*/
+                }
+            }
+        };
 
     //=========================Email and Password===================================//
         //====================to 陳番人================================//
@@ -123,7 +142,7 @@ public class MainActivity extends AppCompatActivity {
                         if(task.isSuccessful()){
                             if(fAuth.getCurrentUser().isEmailVerified()){
                                 Toast.makeText(MainActivity.this, "login successful", Toast.LENGTH_SHORT).show();
-                                initStart();
+
                             }else {
                                 Toast.makeText(MainActivity.this, "go to mailbox to checkout varification email", Toast.LENGTH_SHORT).show();
                             }
@@ -186,6 +205,41 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(),register.class));
             }
         });
+
+
+    }
+
+    private boolean checkBodyInfoComplete() {
+        SharedPreferences sharedPreferences = getSharedPreferences("checkFirstTimeInfoComplete",MODE_PRIVATE);
+        //預設檢查字串為no
+        //使用者填寫完EventTimePicker後改為yes
+        String firstTime = sharedPreferences.getString("checked","no");
+        if (firstTime.equals("yes")){
+            //若檢查字為yes
+            return true;
+        }
+        else{
+            //否則
+            return false;
+        }
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        fAuth.addAuthStateListener(fAuthStateListener);
+    }
+
+    private void checkFirstTime() {
+
+        SharedPreferences sharedPreferences = getSharedPreferences("isFirstTime",MODE_PRIVATE);
+        String firstTime = sharedPreferences.getString("isFirst","yes");
+        if (firstTime.equals("yes")){
+            Intent intent = new Intent(MainActivity.this, WelcomeActivity.class);
+            startActivity(intent);
+        }
 
 
     }
@@ -259,7 +313,7 @@ public class MainActivity extends AppCompatActivity {
             data.put("name", personName);
             data.put("email", personEmail);
             data.put("images", photouri);
-            data.put("isFirstTime","yes");
+
             DocumentReference documentReference=fStore.collection("users").document(Userid);//設定集合的名子為users,底下的文件以使用者id命名
             documentReference.set(data).addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
@@ -272,7 +326,7 @@ public class MainActivity extends AppCompatActivity {
                     Log.d(TAG,"failed! "+e.toString());
                 }
             });
-            initStart();
+
         }
     }
     //==============FaceBook SignIn Functions========================//
@@ -319,7 +373,7 @@ public class MainActivity extends AppCompatActivity {
             data.put("name", personName);
             data.put("email", personEmail);
             data.put("images", photouri);
-            data.put("isFirstTime","yes");
+
 
             DocumentReference documentReference=fStore.collection("users").document(Userid);//設定集合的名子為users,底下的文件以使用者id命名
             documentReference.set(data).addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -333,27 +387,9 @@ public class MainActivity extends AppCompatActivity {
                     Log.d(TAG,"failed! "+e.toString());
                 }
             });
-            initStart();
+
         }
     }
-    //鑒察使用者 有沒有做完初始資料設定
-    //若還沒做完:isFirstTime == yes:導道設訂出次登入資料的葉面
-    private void initStart(){
-        FirebaseUser user = fAuth.getCurrentUser();
-        Userid = user.getUid();
 
-        DocumentReference documentReference=fStore.collection("users").document(Userid);
-        documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
-            @Override
-            public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
-                String isFirstTime = documentSnapshot.getString("isFirstTime");
-                if (isFirstTime.equals("yes")){
-                    startActivity(new Intent(getApplicationContext(), FirstTimeWeightInput.class));
-                }else{
-                    startActivity(new Intent(getApplicationContext(), userPage.class));
-                }
 
-            }
-        });
-    }
 }

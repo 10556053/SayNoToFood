@@ -50,7 +50,7 @@ public class Fast_Time_Scheduler_Dialog extends DialogFragment implements Number
         tv_pm = view.findViewById(R.id.tv_pm);
         bt_time_select_done = view.findViewById(R.id.bt_time_select_done);
 
-
+        np_start_hour.setWrapSelectorWheel(false);
         np_start_hour.setOnValueChangedListener(this);
 
         //=================================獲取activity傳來的資訊=========================================//

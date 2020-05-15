@@ -1,16 +1,21 @@
 package com.example.firebase4.FirstTimeInput;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Html;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.firebase4.HomePage;
 import com.example.firebase4.MainActivity;
 import com.example.firebase4.R;
 
@@ -28,6 +33,11 @@ public class WelcomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
+
+        SharedPreferences sharedPreferences = getSharedPreferences("isFirstTime",MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("isFirst","no");
+        editor.apply();
 
         vp_welcome =(ViewPager)findViewById(R.id.vp_welcome);
         lv_dots = (LinearLayout)findViewById(R.id.lv_dots);
@@ -135,4 +145,37 @@ public class WelcomeActivity extends AppCompatActivity {
 
         }
     };
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        // TODO Auto-generated method stub
+
+        if (keyCode == KeyEvent.KEYCODE_BACK) { // 攔截返回鍵
+            new AlertDialog.Builder(WelcomeActivity.this)
+                    .setTitle("確認視窗")
+                    .setMessage("確定要結束應用程式嗎?")
+                    .setPositiveButton("確定",
+                            new DialogInterface.OnClickListener() {
+
+                                @Override
+                                public void onClick(DialogInterface dialog,
+                                                    int which) {
+                                    Intent i = new Intent(Intent.ACTION_MAIN);
+                                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                    i.addCategory(Intent.CATEGORY_HOME);
+                                    startActivity(i);
+                                }
+                            })
+                    .setNegativeButton("取消",
+                            new DialogInterface.OnClickListener() {
+
+                                @Override
+                                public void onClick(DialogInterface dialog,
+                                                    int which) {
+                                    // TODO Auto-generated method stub
+
+                                }
+                            }).show();
+        }
+        return true;
+    }
 }

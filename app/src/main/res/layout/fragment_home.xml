@@ -39,12 +39,12 @@
         <TextView
             android:id="@+id/timeText"
             android:layout_width="match_parent"
-            android:layout_height="80dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
             android:gravity="center_horizontal"
             android:text="twxt"
-            android:textSize="50dp"
+            android:textSize="18sp"
             android:visibility="invisible" />
 
         <TextView
@@ -55,8 +55,7 @@
             android:layout_gravity="center_horizontal"
             android:gravity="center_horizontal"
             android:text="這裡為剩餘時間"
-            android:textSize="30dp" />
-
+            android:textSize="14sp" />
 
 
     </LinearLayout>

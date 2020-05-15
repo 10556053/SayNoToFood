@@ -1,10 +1,14 @@
 package com.example.firebase4;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 
 import com.example.firebase4.Fragment.dashboard_fragment;
@@ -62,5 +66,39 @@ public class HomePage extends AppCompatActivity implements BottomNavigationView.
         }
 
         return loadFragment(fragment);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        // TODO Auto-generated method stub
+
+        if (keyCode == KeyEvent.KEYCODE_BACK) { // 攔截返回鍵
+            new AlertDialog.Builder(HomePage.this)
+                    .setTitle("確認視窗")
+                    .setMessage("確定要結束應用程式嗎?")
+                    .setPositiveButton("確定",
+                            new DialogInterface.OnClickListener() {
+
+                                @Override
+                                public void onClick(DialogInterface dialog,
+                                                    int which) {
+                                    Intent i = new Intent(Intent.ACTION_MAIN);
+                                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                    i.addCategory(Intent.CATEGORY_HOME);
+                                    startActivity(i);
+                                }
+                            })
+                    .setNegativeButton("取消",
+                            new DialogInterface.OnClickListener() {
+
+                                @Override
+                                public void onClick(DialogInterface dialog,
+                                                    int which) {
+                                    // TODO Auto-generated method stub
+
+                                }
+                            }).show();
+        }
+        return true;
     }
 }

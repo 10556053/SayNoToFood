@@ -134,7 +134,7 @@ public class register extends AppCompatActivity {
                                                 data.put("email", email);
                                                 data.put("password", password);
                                                 data.put("images","" );
-                                                data.put("isFirstTime","yes");
+
                                                 //======================================================================//
                                                 //DocumentReference 為要新增/修改/的資料的路徑
                                                 //collection 是document的集合
