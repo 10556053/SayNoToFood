@@ -314,7 +314,7 @@ public class MainActivity extends AppCompatActivity {
             data.put("email", personEmail);
             data.put("images", photouri);
 
-            DocumentReference documentReference=fStore.collection("users").document(Userid);//設定集合的名子為users,底下的文件以使用者id命名
+            DocumentReference documentReference=fStore.collection(Userid).document("userData");//設定集合的名子為users,底下的文件以使用者id命名
             documentReference.set(data).addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void aVoid) {
@@ -375,7 +375,7 @@ public class MainActivity extends AppCompatActivity {
             data.put("images", photouri);
 
 
-            DocumentReference documentReference=fStore.collection("users").document(Userid);//設定集合的名子為users,底下的文件以使用者id命名
+            DocumentReference documentReference=fStore.collection(Userid).document("userData");//設定集合的名子為users,底下的文件以使用者id命名
             documentReference.set(data).addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void aVoid) {

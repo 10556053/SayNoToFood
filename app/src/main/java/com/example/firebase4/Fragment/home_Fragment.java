@@ -224,9 +224,9 @@ public class home_Fragment extends Fragment {
                 timeText.setVisibility(View.VISIBLE);
                 timeText.setText("進食行程結束，目前為斷食時段，距離今日結束還有:");
                 int dayend = 24*60*60;
-                String toast = String.format("endday = %d , now = %d",dayend,current);
+                /*String toast = String.format("endday = %d , now = %d",dayend,current);
                 Toast.makeText(getContext().getApplicationContext(), toast,
-                        Toast.LENGTH_SHORT).show();
+                        Toast.LENGTH_SHORT).show();*/
                 //距離今日結束的時間 =今日結束時間-現在時間
                 int before_end = dayend - current;
                 //小時的秒數
