@@ -98,11 +98,13 @@ public class MainActivity extends AppCompatActivity {
 
         //先檢查是否撥放introduction
         checkFirstTime();
+
         fAuthStateListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 //若使用者狀態是以登入
                 if (firebaseAuth.getCurrentUser()!=null){
+
                     //檢查是否完成基本身體數值
                     if (checkBodyInfoComplete()==true){
                         //若是，則送往主頁
@@ -110,6 +112,7 @@ public class MainActivity extends AppCompatActivity {
                         startActivity(intent);
                     }else {
                         //若否，則送往填寫
+
                         Intent intent = new Intent(MainActivity.this, FirstTimeWeightInput.class);
                         startActivity(intent);
                     }
@@ -126,32 +129,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String email= et_email.getText().toString();
                 String password= et_password.getText().toString();
-
-                if (email.isEmpty()){
-                    et_email.setError("請輸入信箱");
-                    return;
-                }
-                if (password.isEmpty()|| password.length()<6){
-                    et_password.setError("密碼錯誤");
-                    return;
-                }
-
-                fAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(task.isSuccessful()){
-                            if(fAuth.getCurrentUser().isEmailVerified()){
-                                Toast.makeText(MainActivity.this, "login successful", Toast.LENGTH_SHORT).show();
-
-                            }else {
-                                Toast.makeText(MainActivity.this, "go to mailbox to checkout varification email", Toast.LENGTH_SHORT).show();
-                            }
-
-                        }else{
-                            Toast.makeText(MainActivity.this, "error"+task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
+                loginViaEmail(email,password);
             }
         });
         //======================Facebook============================//
@@ -209,6 +187,8 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
+
     private boolean checkBodyInfoComplete() {
         SharedPreferences sharedPreferences = getSharedPreferences("checkFirstTimeInfoComplete",MODE_PRIVATE);
         //預設檢查字串為no
@@ -224,7 +204,34 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
+    private void loginViaEmail(String email,String password){
 
+
+        if (email.isEmpty()){
+            et_email.setError("請輸入信箱");
+            return;
+        }
+        if (password.isEmpty()|| password.length()<6){
+            et_password.setError("密碼錯誤");
+            return;
+        }
+        fAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if(task.isSuccessful()){
+                    if(fAuth.getCurrentUser().isEmailVerified()){
+                        Toast.makeText(MainActivity.this, "login successful", Toast.LENGTH_SHORT).show();
+
+                    }else {
+                        Toast.makeText(MainActivity.this, "尚未激活驗證信件，請到油箱確認", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                    }
+                }else{
+                    Toast.makeText(MainActivity.this, "error"+task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
     @Override
     protected void onStart() {
         super.onStart();
@@ -314,7 +321,7 @@ public class MainActivity extends AppCompatActivity {
             data.put("email", personEmail);
             data.put("images", photouri);
 
-            DocumentReference documentReference=fStore.collection(Userid).document("userData");//設定集合的名子為users,底下的文件以使用者id命名
+            DocumentReference documentReference=fStore.collection("users").document(Userid).collection("userData").document("AccountData");//設定集合的名子為users,底下的文件以使用者id命名
             documentReference.set(data).addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void aVoid) {
@@ -375,7 +382,7 @@ public class MainActivity extends AppCompatActivity {
             data.put("images", photouri);
 
 
-            DocumentReference documentReference=fStore.collection(Userid).document("userData");//設定集合的名子為users,底下的文件以使用者id命名
+            DocumentReference documentReference=fStore.collection("users").document(Userid).collection("userData").document("AccountData");//設定集合的名子為users,底下的文件以使用者id命名
             documentReference.set(data).addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void aVoid) {

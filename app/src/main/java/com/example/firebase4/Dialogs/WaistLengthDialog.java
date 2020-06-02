@@ -25,9 +25,9 @@ import com.google.firebase.firestore.SetOptions;
 import java.util.HashMap;
 import java.util.Map;
 
-public class TargetWeightInputDialog extends AppCompatDialogFragment implements NumberPicker.OnValueChangeListener {
-    private NumberPicker tp;
-    private TextView tv_display_target_weight;
+public class WaistLengthDialog extends AppCompatDialogFragment implements NumberPicker.OnValueChangeListener {
+    private NumberPicker np;
+    private TextView tv_display_waist_length;
     private TargetWeightInputDialogListener targetWeightInputDialogListener;
 
 
@@ -45,17 +45,17 @@ public class TargetWeightInputDialog extends AppCompatDialogFragment implements 
         AlertDialog.Builder builder= new AlertDialog.Builder(getActivity());
 
         LayoutInflater inflater= getActivity().getLayoutInflater();
-        View view = inflater.inflate(R.layout.targetweightpicker,null);
-        tp=view.findViewById(R.id.target_weight_picker);
-        tp.setMaxValue(100);
-        tp.setMinValue(0);
-        tp.setValue(80);
-        tp.setWrapSelectorWheel(false);
-        tp.setOnValueChangedListener(this);
-        tv_display_target_weight=view.findViewById(R.id.tv_display_target_weight);
+        View view = inflater.inflate(R.layout.numberpicker,null);
+        np=view.findViewById(R.id.num_picker);
+        np.setMaxValue(100);
+        np.setMinValue(0);
+        np.setValue(80);
+        np.setWrapSelectorWheel(false);
+        np.setOnValueChangedListener(this);
+        tv_display_waist_length=view.findViewById(R.id.tv_display_cur_num);
 
         builder.setView(view);
-        builder.setTitle("Pick ur target weight");
+        builder.setTitle("Pick ur target length");
         builder.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -65,12 +65,12 @@ public class TargetWeightInputDialog extends AppCompatDialogFragment implements 
         builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                int i = tp.getValue();
+                int i = np.getValue();
                 String target_weight = Integer.toString(i);
                 targetWeightInputDialogListener.applyTargetWeight(target_weight);
-                DocumentReference documentReference = fStore.collection("users").document(UserId).collection("bodyData").document("my_body_data");
+                DocumentReference documentReference=fStore.collection("users").document(UserId).collection("userData").document("AccountData");
                 Map<String, Object> myBodyData = new HashMap<>();
-                myBodyData.put("target_weight", i);
+                myBodyData.put("waist_length", i);
                 documentReference.set(myBodyData, SetOptions.merge()).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
@@ -99,7 +99,7 @@ public class TargetWeightInputDialog extends AppCompatDialogFragment implements 
     }
     @Override
     public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-        tv_display_target_weight.setText(newVal+"公斤");
+        tv_display_waist_length.setText(newVal+"公分");
     }
 
     public interface TargetWeightInputDialogListener{

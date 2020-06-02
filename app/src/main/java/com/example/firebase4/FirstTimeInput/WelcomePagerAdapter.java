@@ -24,21 +24,21 @@ public class WelcomePagerAdapter extends PagerAdapter {
 
     //valueArrays
     public int[] slideImage={
-            R.drawable.hey_you,
-            R.drawable.healthy_girl_icon,
-            R.drawable.diet_icon,
-            R.drawable.fitness_icon
+            R.drawable.pineapple,
+            R.drawable.welcome_img_food,
+            R.drawable.welcome_img_greedy,
+            R.drawable.lose_weight
     };
 
     public String[] sliderTitle={
-            "Hey Hey you",
+            "Hello，想要變得更建康的你",
             "什麼是斷食",
             "斷食的迷思",
             "斷食並不會影響健康"
     };
 
     public String[] sliderContext={
-            "Yea ~you",
+            "龍色在濟業學遠。說多非……命造城多，開型的大陽衣寫藝，學高從小出斯外……然業手如同外福告球孩；拉行有到無靈中，間財我我、行示做省發我的到氣處接單他",
             "洋樹起戰了論求，支化易故拉質？是一小立提方上法一房上標們身過活多到度直證，不飛沒，山河光工文亞各著。使方前臺現算天在？總著是年沒面要住量再大？記安黑興發我的到氣處接單他快企。少對一燈。",
             "年的相眾龍色在濟業學遠。說多非……命造城多，開型的大陽衣寫藝，學高之，十依服入你破則情香地種、管濟港有義士命流如期今市叫工",
             "結正頭成時辦我事聲老解而書從小出斯外……然業手如同外福告球孩；拉行有到無靈中，間財我我、行示做省，觀手了語易廣、演人一裡們前愛代長成！金那解影轉在防行細背！巴名自都？點是果住。一工打"

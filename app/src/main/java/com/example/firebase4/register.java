@@ -138,7 +138,7 @@ public class register extends AppCompatActivity {
                                                 //======================================================================//
                                                 //DocumentReference 為要新增/修改/的資料的路徑
                                                 //collection 是document的集合
-                                                DocumentReference documentReference=fStore.collection(UserId).document("userData");//設定集合的名子為users,底下的文件以使用者id命名
+                                                DocumentReference documentReference=fStore.collection("users").document(UserId).collection("userData").document("AccountData");//設定集合的名子為users,底下的文件以使用者id命名
 
                                                 //上船剛剛創立的data到firebase
                                                 documentReference.set(data).addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -152,6 +152,10 @@ public class register extends AppCompatActivity {
                                                         Log.d(TAG,"failed! "+e.toString());
                                                     }
                                                 });
+
+                                                fAuth.signOut();
+                                                startActivity(new Intent(getApplicationContext(),MainActivity.class));
+
                                                 //===================================================================//
                                             }else {
                                                 Toast.makeText(register.this, "驗證郵件發送失敗"+task.getException().getMessage(), Toast.LENGTH_LONG).show();

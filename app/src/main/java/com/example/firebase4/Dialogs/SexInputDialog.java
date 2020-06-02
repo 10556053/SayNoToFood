@@ -71,7 +71,7 @@ public class SexInputDialog extends AppCompatDialogFragment implements NumberPic
                 int i = sp.getValue();
                 String sex = genders[i];
                 sexInputDialogListener.applySex(sex);
-                DocumentReference documentReference = fStore.collection("users").document(UserId).collection("bodyData").document("my_body_data");
+                DocumentReference documentReference=fStore.collection("users").document(UserId).collection("userData").document("AccountData");
                 Map<String, Object> myBodyData = new HashMap<>();
                 myBodyData.put("current_sex", sex);
                 documentReference.set(myBodyData, SetOptions.merge()).addOnSuccessListener(new OnSuccessListener<Void>() {

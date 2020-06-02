@@ -4,18 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".FirstTimeInput.WelcomeActivity"
-    android:background="@drawable/healthy_food">
+    android:background="#FCFCFC"
+    tools:context=".FirstTimeInput.WelcomeActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="#FFFFADAD"
         android:orientation="vertical">
 
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/vp_welcome"
             android:layout_width="match_parent"
-            android:layout_height="600sp">
+            android:layout_height="579dp">
 
         </androidx.viewpager.widget.ViewPager>
 
@@ -34,12 +35,15 @@
                 android:background="@drawable/mybutton"
                 android:text="Back"
                 android:textColor="#FFFFFF"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                android:visibility="invisible" />
 
             <LinearLayout
                 android:id="@+id/lv_dots"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:layout_marginLeft="50dp"
+                android:layout_marginRight="50dp"
                 android:gravity="center_horizontal"
                 android:orientation="horizontal"></LinearLayout>
 

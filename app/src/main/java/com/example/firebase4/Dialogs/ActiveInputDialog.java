@@ -25,10 +25,10 @@ import com.google.firebase.firestore.SetOptions;
 import java.util.HashMap;
 import java.util.Map;
 
-public class WeightInputDialog extends AppCompatDialogFragment implements NumberPicker.OnValueChangeListener {
-    private NumberPicker np;
-    private TextView tv_display_cur_num;
-    private WeightInputDialogListener weightInputDialogListener;
+public class ActiveInputDialog extends AppCompatDialogFragment implements NumberPicker.OnValueChangeListener {
+    private NumberPicker sp;
+    private TextView tv_display_cur_sex;
+    private ActiveInputDialogListener activeInputDialogListener;
 
 
 
@@ -39,23 +39,26 @@ public class WeightInputDialog extends AppCompatDialogFragment implements Number
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
 
+        final String[] genders = getResources().getStringArray(R.array.active);
+
         fAuth=FirebaseAuth.getInstance();
         fStore=FirebaseFirestore.getInstance();
         UserId=fAuth.getCurrentUser().getUid();
         AlertDialog.Builder builder= new AlertDialog.Builder(getActivity());
 
         LayoutInflater inflater= getActivity().getLayoutInflater();
-        View view = inflater.inflate(R.layout.numberpicker,null);
-        np=view.findViewById(R.id.num_picker);
-        np.setMaxValue(100);
-        np.setMinValue(0);
-        np.setValue(80);
-        np.setWrapSelectorWheel(false);
-        np.setOnValueChangedListener(this);
-        tv_display_cur_num=view.findViewById(R.id.tv_display_cur_num);
+        View view = inflater.inflate(R.layout.sexpicker,null);
+        sp=view.findViewById(R.id.sex_picker);
+        sp.setMaxValue(genders.length-1);
+        sp.setMinValue(0);
+        sp.setDisplayedValues(genders);
+
+        sp.setWrapSelectorWheel(false);
+        sp.setOnValueChangedListener(this);
+        tv_display_cur_sex=view.findViewById(R.id.tv_display_cur_sex);
 
         builder.setView(view);
-        builder.setTitle("Pick ur weight");
+        builder.setTitle("Pick ur active mode");
         builder.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -65,12 +68,12 @@ public class WeightInputDialog extends AppCompatDialogFragment implements Number
         builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                int i = np.getValue();
-                String weight = Integer.toString(i);
-                weightInputDialogListener.applyWeight(weight);
+                int i = sp.getValue();
+                String active = genders[i];
+                activeInputDialogListener.applyActive(active);
                 DocumentReference documentReference=fStore.collection("users").document(UserId).collection("userData").document("AccountData");
                 Map<String, Object> myBodyData = new HashMap<>();
-                myBodyData.put("current_weight", i);
+                myBodyData.put("active", active);
                 documentReference.set(myBodyData, SetOptions.merge()).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
@@ -91,17 +94,17 @@ public class WeightInputDialog extends AppCompatDialogFragment implements Number
         super.onAttach(context);
         //ctrl + alt + t 自動生成try_catch
         try {
-            weightInputDialogListener=(WeightInputDialogListener)context;
+            activeInputDialogListener=(ActiveInputDialogListener)context;
         } catch (ClassCastException e) {
             throw  new ClassCastException(context.toString()+"must implement WeightInputDialogListener");
         }
     }
     @Override
     public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-        tv_display_cur_num.setText(newVal+"公斤");
+
     }
 
-    public interface WeightInputDialogListener{
-        void applyWeight(String weight);
+    public interface ActiveInputDialogListener{
+        void applyActive(String active);
     }
 }

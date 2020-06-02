@@ -26,7 +26,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class HeightInputDialog extends AppCompatDialogFragment implements NumberPicker.OnValueChangeListener {
-    private NumberPicker hp;
+    private NumberPicker np;
     private TextView tv_display_cur_height;
     private HeightInputDialogListener heightInputDialogListener;
 
@@ -45,17 +45,17 @@ public class HeightInputDialog extends AppCompatDialogFragment implements Number
         AlertDialog.Builder builder= new AlertDialog.Builder(getActivity());
 
         LayoutInflater inflater= getActivity().getLayoutInflater();
-        View view = inflater.inflate(R.layout.heightpicker,null);
-        hp=view.findViewById(R.id.height_picker);
-        hp.setMaxValue(250);
-        hp.setMinValue(100);
-        hp.setValue(150);
-        hp.setWrapSelectorWheel(false);
-        hp.setOnValueChangedListener(this);
-        tv_display_cur_height=view.findViewById(R.id.tv_display_cur_height);
+        View view = inflater.inflate(R.layout.numberpicker,null);
+        np=view.findViewById(R.id.num_picker);
+        np.setMaxValue(250);
+        np.setMinValue(100);
+        np.setValue(150);
+        np.setWrapSelectorWheel(false);
+        np.setOnValueChangedListener(this);
+        tv_display_cur_height=view.findViewById(R.id.tv_display_cur_num);
 
         builder.setView(view);
-        builder.setTitle("Pick ur weight");
+        builder.setTitle("Pick ur height");
         builder.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -65,10 +65,10 @@ public class HeightInputDialog extends AppCompatDialogFragment implements Number
         builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                int i = hp.getValue();
+                int i = np.getValue();
                 String height = Integer.toString(i);
                 heightInputDialogListener.applyHeight(height);
-                DocumentReference documentReference = fStore.collection("users").document(UserId).collection("bodyData").document("my_body_data");
+                DocumentReference documentReference=fStore.collection("users").document(UserId).collection("userData").document("AccountData");
                 Map<String, Object> myBodyData = new HashMap<>();
                 myBodyData.put("current_height", i);
                 documentReference.set(myBodyData, SetOptions.merge()).addOnSuccessListener(new OnSuccessListener<Void>() {

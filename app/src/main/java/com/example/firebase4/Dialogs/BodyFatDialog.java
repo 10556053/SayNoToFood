@@ -25,10 +25,10 @@ import com.google.firebase.firestore.SetOptions;
 import java.util.HashMap;
 import java.util.Map;
 
-public class WeightInputDialog extends AppCompatDialogFragment implements NumberPicker.OnValueChangeListener {
+public class BodyFatDialog extends AppCompatDialogFragment implements NumberPicker.OnValueChangeListener {
     private NumberPicker np;
-    private TextView tv_display_cur_num;
-    private WeightInputDialogListener weightInputDialogListener;
+    private TextView tv_display_body_fat;
+    private BodyFatInputDialogListener bodyfatInputDialogListener;
 
 
 
@@ -47,15 +47,15 @@ public class WeightInputDialog extends AppCompatDialogFragment implements Number
         LayoutInflater inflater= getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.numberpicker,null);
         np=view.findViewById(R.id.num_picker);
-        np.setMaxValue(100);
-        np.setMinValue(0);
-        np.setValue(80);
+        np.setMaxValue(40);
+        np.setMinValue(20);
+        np.setValue(30);
         np.setWrapSelectorWheel(false);
         np.setOnValueChangedListener(this);
-        tv_display_cur_num=view.findViewById(R.id.tv_display_cur_num);
+        tv_display_body_fat=view.findViewById(R.id.tv_display_cur_num);
 
         builder.setView(view);
-        builder.setTitle("Pick ur weight");
+        builder.setTitle("Pick ur body fat");
         builder.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -66,11 +66,11 @@ public class WeightInputDialog extends AppCompatDialogFragment implements Number
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 int i = np.getValue();
-                String weight = Integer.toString(i);
-                weightInputDialogListener.applyWeight(weight);
+                String target_weight = Integer.toString(i);
+                bodyfatInputDialogListener.applyBodyFat(target_weight);
                 DocumentReference documentReference=fStore.collection("users").document(UserId).collection("userData").document("AccountData");
                 Map<String, Object> myBodyData = new HashMap<>();
-                myBodyData.put("current_weight", i);
+                myBodyData.put("body_fat", i);
                 documentReference.set(myBodyData, SetOptions.merge()).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
@@ -86,22 +86,23 @@ public class WeightInputDialog extends AppCompatDialogFragment implements Number
         });
         return builder.create();
     }
+
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         //ctrl + alt + t 自動生成try_catch
         try {
-            weightInputDialogListener=(WeightInputDialogListener)context;
+            bodyfatInputDialogListener=(BodyFatInputDialogListener)context;
         } catch (ClassCastException e) {
             throw  new ClassCastException(context.toString()+"must implement WeightInputDialogListener");
         }
     }
     @Override
     public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-        tv_display_cur_num.setText(newVal+"公斤");
+        tv_display_body_fat.setText(newVal+"%");
     }
 
-    public interface WeightInputDialogListener{
-        void applyWeight(String weight);
+    public interface BodyFatInputDialogListener{
+        void applyBodyFat(String target_weight);
     }
 }

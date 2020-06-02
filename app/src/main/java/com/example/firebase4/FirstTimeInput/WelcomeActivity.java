@@ -44,6 +44,8 @@ public class WelcomeActivity extends AppCompatActivity {
         bt_next=(Button)findViewById(R.id.bt_next);
         bt_prev=(Button)findViewById(R.id.bt_prev);
 
+
+
         welcomePagerAdapter = new WelcomePagerAdapter(this);
         vp_welcome.setAdapter(welcomePagerAdapter);
 
@@ -115,6 +117,7 @@ public class WelcomeActivity extends AppCompatActivity {
         public void onPageSelected(int position) {
             addDotIndicator(position);
             current_page = position;
+
 
 
             if (current_page==0){
