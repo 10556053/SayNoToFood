@@ -38,15 +38,13 @@ public class FastEventScheduler extends AppCompatActivity implements View.OnClic
         cd_advanced = (CardView)findViewById(R.id.cd_advanced);
         cd_experienced = (CardView)findViewById(R.id.cd_experienced);
         cd_hardcore = (CardView)findViewById(R.id.cd_hardcore);
-        cd_perfect = (CardView)findViewById(R.id.cd_perfect);
-        cd_incredible = (CardView)findViewById(R.id.cd_incredible);
+
 
         cd_novice.setOnClickListener(this);
         cd_experienced.setOnClickListener(this);
         cd_advanced.setOnClickListener(this);
         cd_hardcore.setOnClickListener(this);
-        cd_perfect.setOnClickListener(this);
-        cd_incredible.setOnClickListener(this);
+
         //Stetho.initializeWithDefaults(this);
     }
 
@@ -59,14 +57,14 @@ public class FastEventScheduler extends AppCompatActivity implements View.OnClic
 
             case R.id.cd_novice:
                 reset_Data();
-                putDataUserWeekPlan( 8 );
+                putDataUserWeekPlan( 10 );
                 openAlertDialog(0);
 
         }
         switch (v.getId()){
             case R.id.cd_experienced:
                 reset_Data();
-                putDataUserWeekPlan( 9 );
+                putDataUserWeekPlan( 8 );
                 openAlertDialog(1);
                 //putDataAdvanced();
 
@@ -74,7 +72,7 @@ public class FastEventScheduler extends AppCompatActivity implements View.OnClic
         switch (v.getId()){
             case R.id.cd_advanced:
                 reset_Data();
-                putDataUserWeekPlan( 10 );
+                putDataUserWeekPlan( 6 );
                 openAlertDialog(2);
                 //putDataHard();
 
@@ -82,24 +80,8 @@ public class FastEventScheduler extends AppCompatActivity implements View.OnClic
         switch (v.getId()){
             case R.id.cd_hardcore:
                 reset_Data();
-                putDataUserWeekPlan( 5 );
+                putDataUserWeekPlan( 6 );
                 openAlertDialog(3);
-                //putDataHard();
-
-        }
-        switch (v.getId()){
-            case R.id.cd_perfect:
-                reset_Data();
-                putDataUserWeekPlan( 4 );
-                openAlertDialog(4);
-                //putDataHard();
-
-        }
-        switch (v.getId()){
-            case R.id.cd_incredible:
-                reset_Data();
-                putDataUserWeekPlan( 2 );
-                openAlertDialog(5);
                 //putDataHard();
 
         }
