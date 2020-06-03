@@ -2,12 +2,16 @@ package com.example.firebase4;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -40,6 +44,7 @@ import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.auth.UserInfo;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -99,27 +104,30 @@ public class MainActivity extends AppCompatActivity {
         //先檢查是否撥放introduction
         checkFirstTime();
 
+        /*
         fAuthStateListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 //若使用者狀態是以登入
                 if (firebaseAuth.getCurrentUser()!=null){
-
                     //檢查是否完成基本身體數值
                     if (checkBodyInfoComplete()==true){
                         //若是，則送往主頁
                         Intent intent = new Intent(MainActivity.this, HomePage.class);
                         startActivity(intent);
+
                     }else {
                         //若否，則送往填寫
-
                         Intent intent = new Intent(MainActivity.this, FirstTimeWeightInput.class);
                         startActivity(intent);
-                    }
 
+                    }
                 }
+
+
             }
-        };
+        };*/
+        checkUser();
 
     //=========================Email and Password===================================//
         //====================to 陳番人================================//
@@ -129,7 +137,27 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String email= et_email.getText().toString();
                 String password= et_password.getText().toString();
-                loginViaEmail(email,password);
+                if (email.isEmpty()){
+                    et_email.setError("請輸入信箱");
+                    return;
+                }
+                if (password.isEmpty()|| password.length()<6){
+                    et_password.setError("密碼錯誤");
+                    return;
+                }
+                fAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if(task.isSuccessful()){
+                            if(!fAuth.getCurrentUser().isEmailVerified()){
+                                Toast.makeText(MainActivity.this, "請到郵箱驗證帳號", Toast.LENGTH_LONG).show();
+                            }
+                            checkUser();
+                        }else{
+                            Toast.makeText(MainActivity.this, "請確認是否輸入正確的電子郵件及密碼", Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
             }
         });
         //======================Facebook============================//
@@ -187,6 +215,55 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    private void checkUser() {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            for (UserInfo profile : user.getProviderData()) {
+                // Id of the provider (ex: google.com)
+                String providerId = profile.getProviderId();
+
+                if (providerId.equals("google.com")||providerId.equals("facebook.com")){
+                    //檢查是否完成基本身體數值
+
+                    if (checkBodyInfoComplete()==true){
+                        //若是，則送往主頁
+                        //Toast.makeText(MainActivity.this, "user is logged in via "+providerId, Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(MainActivity.this, HomePage.class);
+                        startActivity(intent);
+
+                    }else {
+                        //若否，則送往填寫
+                        //Toast.makeText(MainActivity.this, "user is logged in via "+providerId, Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(MainActivity.this, FirstTimeWeightInput.class);
+                        startActivity(intent);
+
+                    }
+                }
+                //使用者適用firebase登入
+                else {
+                    if (user.isEmailVerified()){
+                        //Toast.makeText(MainActivity.this, "user is logged in via"+providerId, Toast.LENGTH_LONG).show();
+                        if (checkBodyInfoComplete()==true){
+                            //若是，則送往主頁
+                            Toast.makeText(MainActivity.this, "user is logged in via "+providerId, Toast.LENGTH_LONG).show();
+                            Intent intent = new Intent(MainActivity.this, HomePage.class);
+                            startActivity(intent);
+
+                        }else {
+                            //若否，則送往填寫
+                            //Toast.makeText(MainActivity.this, "user is logged in via "+providerId, Toast.LENGTH_LONG).show();
+                            //Toast.makeText(MainActivity.this, "user is logged in via "+providerId, Toast.LENGTH_LONG).show();
+                            Intent intent = new Intent(MainActivity.this, FirstTimeWeightInput.class);
+                            startActivity(intent);
+
+                        }
+                    }
+
+                }
+
+            }
+        }
+    }
 
 
     private boolean checkBodyInfoComplete() {
@@ -204,40 +281,8 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
-    private void loginViaEmail(String email,String password){
 
 
-        if (email.isEmpty()){
-            et_email.setError("請輸入信箱");
-            return;
-        }
-        if (password.isEmpty()|| password.length()<6){
-            et_password.setError("密碼錯誤");
-            return;
-        }
-        fAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if(task.isSuccessful()){
-                    if(fAuth.getCurrentUser().isEmailVerified()){
-                        Toast.makeText(MainActivity.this, "login successful", Toast.LENGTH_SHORT).show();
-
-                    }else {
-                        Toast.makeText(MainActivity.this, "尚未激活驗證信件，請到油箱確認", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(getApplicationContext(),MainActivity.class));
-                    }
-                }else{
-                    Toast.makeText(MainActivity.this, "error"+task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-    }
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-        fAuth.addAuthStateListener(fAuthStateListener);
-    }
 
     private void checkFirstTime() {
 
@@ -325,6 +370,7 @@ public class MainActivity extends AppCompatActivity {
             documentReference.set(data).addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void aVoid) {
+                    checkUser();
                     Log.d(TAG,"success! useraccount is created for"+Userid);
                 }
             }).addOnFailureListener(new OnFailureListener() {
@@ -386,6 +432,7 @@ public class MainActivity extends AppCompatActivity {
             documentReference.set(data).addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void aVoid) {
+                    checkUser();
                     Log.d(TAG,"success! useraccount is created for"+Userid);
                 }
             }).addOnFailureListener(new OnFailureListener() {
@@ -397,6 +444,7 @@ public class MainActivity extends AppCompatActivity {
 
         }
     }
+
 
 
 }

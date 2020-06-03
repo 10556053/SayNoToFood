@@ -1,12 +1,15 @@
 package com.example.firebase4.FirstTimeInput;
 
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.NumberPicker;
@@ -22,6 +25,7 @@ import com.example.firebase4.Dialogs.SexInputDialog;
 import com.example.firebase4.Dialogs.WaistLengthDialog;
 import com.example.firebase4.Dialogs.WeightInputDialog;
 import com.example.firebase4.FastEventScheduler.FastEventScheduler;
+import com.example.firebase4.MainActivity;
 import com.example.firebase4.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -253,5 +257,39 @@ public class FirstTimeWeightInput extends AppCompatActivity implements View.OnCl
     public void applyActive(String active) {
         tv_show_active.setText("每日活動:"+active);
         check[6]=true;
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        // TODO Auto-generated method stub
+
+        if (keyCode == KeyEvent.KEYCODE_BACK) { // 攔截返回鍵
+            new AlertDialog.Builder(FirstTimeWeightInput.this)
+                    .setTitle("確認視窗")
+                    .setMessage("確定要結束應用程式嗎?")
+                    .setPositiveButton("確定",
+                            new DialogInterface.OnClickListener() {
+
+                                @Override
+                                public void onClick(DialogInterface dialog,
+                                                    int which) {
+                                    Intent i = new Intent(Intent.ACTION_MAIN);
+                                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                    i.addCategory(Intent.CATEGORY_HOME);
+                                    startActivity(i);
+                                }
+                            })
+                    .setNegativeButton("取消",
+                            new DialogInterface.OnClickListener() {
+
+                                @Override
+                                public void onClick(DialogInterface dialog,
+                                                    int which) {
+                                    // TODO Auto-generated method stub
+
+                                }
+                            }).show();
+        }
+        return true;
     }
 }

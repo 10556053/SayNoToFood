@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="60dp"
             android:gravity="center"
-            android:text="FireBase4"
+            android:text="拒食強身"
             android:textColor="#F3FFFFFF"
             android:textSize="36sp" />
 
@@ -43,7 +43,7 @@
             android:layout_marginRight="40dp"
             android:background="#92CCCCCC"
             android:ems="10"
-            android:inputType="textPersonName" />
+            android:inputType="textPassword" />
 
         <Button
             android:id="@+id/bt_login"
@@ -80,7 +80,8 @@
             android:layout_marginTop="30dp"
             android:layout_marginRight="80dp"
             android:gravity="center"
-            android:text="沒有帳號? 點我創立" />
+            android:text="沒有帳號? 點我創立"
+            android:textColor="#FFFFFF" />
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -124,8 +125,6 @@ public class register extends AppCompatActivity {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
                                             if(task.isSuccessful()){
-                                                Toast.makeText(register.this, "成功創立帳戶，請到郵箱驗證信件", Toast.LENGTH_LONG).show();
-
                                                 //userId設定為當前使用者的id
                                                 UserId=fAuth.getCurrentUser().getUid();
                                                 //創建hashmap儲存資料
@@ -153,7 +152,7 @@ public class register extends AppCompatActivity {
                                                     }
                                                 });
 
-                                                fAuth.signOut();
+                                                Toast.makeText(register.this, "請到註冊的email收取驗證信件", Toast.LENGTH_LONG).show();
                                                 startActivity(new Intent(getApplicationContext(),MainActivity.class));
 
                                                 //===================================================================//
@@ -164,8 +163,8 @@ public class register extends AppCompatActivity {
                                     });
                                     //===========================================================================//
                                 } else {
-                                    Toast.makeText(register.this, "Authentication failed.",
-                                            Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(register.this, "無效的電子郵件或此郵件已被註冊",
+                                            Toast.LENGTH_LONG).show();
 
                                 }
                             };

@@ -341,8 +341,8 @@
             android:layout_marginLeft="270dp"
             android:layout_marginTop="20dp"
             android:layout_marginRight="30dp"
-            android:text="Button"
-            android:background="@drawable/mybutton"/>
+            android:background="@drawable/mybutton"
+            android:text="下一步" />
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

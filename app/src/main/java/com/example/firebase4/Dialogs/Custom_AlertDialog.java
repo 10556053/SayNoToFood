@@ -42,8 +42,7 @@ public class Custom_AlertDialog extends DialogFragment {
                 "15/9斷食法",
                 "14/10斷食法",
                 "19/5斷食法",
-                "20/4斷食法",
-                "22/2斷食法",
+
         };
 
         String[] description = {
@@ -51,8 +50,7 @@ public class Custom_AlertDialog extends DialogFragment {
                 "在這裡放上斷食的一些注意事項",
                 "在這裡放上斷食的一些注意事項",
                 "在這裡放上斷食的一些注意事項",
-                "在這裡放上斷食的一些注意事項",
-                "在這裡放上斷食的一些注意事項",
+
         };
 
         builder.setView(view);

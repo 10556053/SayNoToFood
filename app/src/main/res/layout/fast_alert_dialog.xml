@@ -49,7 +49,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="40dp"
                 android:background="@drawable/alert_button"
-                android:text="Button" />
+                android:text="確定" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 </LinearLayout>
